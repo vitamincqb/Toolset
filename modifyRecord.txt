@@ -1,0 +1,208 @@
+2018-05-17 16:40:17
+新添加了writeReadme()函数，用了方便记录平时对程序的修改, 进入记录的入口是输入'readme'
+
+
+2018-05-17 16:42:54
+修改了deco_cls_menus函数，加深了对装饰器的理解，装饰器也可以带参数了.代码更简洁，逻辑更顺。
+
+
+2018-05-17 16:48:45
+修改了exportapk()中的一个小bug, 之前无法导出lantern.apk, 因为其packagename找不出来， 将findkey='com'修改为findkey = 'u0', 逻辑才合理. 
+
+
+2018-05-17 17:42:37
+再次完善了writeModieyRec()
+
+
+2018-05-18 11:35:56
+修改了writeReadmefile(), 去掉了import partial
+明白了partial用法及内置函数iter()的用法. 
+https://www.cnblogs.com/yitouniu/p/5243136.html
+iter(object, sentinel)
+
+Python官方文档对于这种形式的解释是：“ If the second argument, sentinel, is given, then object must be a callable object. The iterator created in this case will call object with no arguments for each call to its __next__() method; if the value returned is equal to sentinel,StopIteration will be raised, otherwise the value will be returned.”。
+
+这句话的意思是说：如果传递了第二个参数，则object必须是一个可调用的对象（如，函数）。此时，iter创建了一个迭代器对象，每次调用这个迭代器对象的__next__()方法时，都会调用object。
+
+如果__next__的返回值等于sentinel，则抛出StopIteration异常，否则返回下一个值.
+
+如本例中的输入，可以不断的输入，但当输入'end'时就结束输入. 极好. 
+
+        print('修改日志保存在以下位置：\n{}'.format(abspathOfRecfile))
+        f = open(currunningpyfilepath + '\modifyRecord.txt', 'a')
+        # inputModifyRec = partial(input)
+        # 遇到这个就结束
+        endflag = 'end' 
+        modifyRec = []
+        # 输入待记录的内容
+        print('请输入Modidy Note:\n')
+        # for line in iter(inputModifyRec, endflag):
+        for line in iter(input, endflag):
+            modifyRec.append(line)
+        # 写入输入的内容
+        f.write('\n\n' + getnowdatatime(0) + '\n')
+        for line in modifyRec:
+            f.write(line + '\n')
+        # 关闭文件
+        f.close()
+        print('记录已保存！')
+
+
+
+2018-05-19 14:52:58
+修改了checkAdbConnectability（），因为当有多台手机同时连上adb时，会识别为连接adb异常，现在如果连接了多台手机设备，会有提示让只连接一台才能正常操作. 
+liststr = ','.join(list).replace('\n', '').strip()
+elif liststr.count('device') > 1:
+    print('当前连接了多个设备，请确保只连接一个设备才能正常操作!')
+    return False
+
+
+2018-05-22 15:01:39
+修改了getusername（）
+之前此函数只适用于在公司电脑上运行，如果在家里私人电脑上运行会出错。
+修改了获取username的逻辑，现在在家也可以运行了。
+old code:
+# 获取username, 如mtk08814
+def getusername():
+    name = os.popen('echo %username%').readlines()
+    # 获取当前的username
+    return name[0][0:8]
+
+new code:
+def getusername():
+    namelist = os.popen('echo %username%').readlines()
+    username = namelist[0].replace("\n", "")
+    # 获取当前的username
+    return username
+
+
+2018-05-22 16:24:34
+应用新的字符串格式方式f-string来替换原来的format
+1. print('my name is {}'.format(name))
+   print(f'my name is {name}')
+2. x = 11/3
+   width = 10
+   precision = 4
+   print('value:{:.4f}.format(x))
+=> print(f'valude:{x:10.4}
+
+
+2018-05-22 22:12:52
+进一步用f-string替换所有的format来格式化字符串（当前已全部替换所有的format）
+    # root.geometry("{}x{}+{:.0f}+{:.0f}".format(ww,wh,x,y))
+    root.geometry(f"{ww}x{wh}+{x:.0f}+{y:.0f}")
+
+    # self.timestr.set('{:0>2d}:{:0>2d}:{:0>3d}'.format(minutes,seconds,hseconds))
+    self.timestr.set(f'{minutes:0>2d}:{seconds:0>2d}:{hseconds:0>3d}') 
+
+
+2018-05-24 23:07:17
+加强了recordScreen()的纠错能力，因为当前在录屏时，有时按CTRL+C中止录屏后，发现video并未copy至PC端. 
+    finally:
+        if isexistfolder(filename) == True:
+            print('\n手动中止录制, call finally!')
+            print('正在将video copy至桌面,请稍候... ...')
+            if os.system('adb pull /sdcard/' + filename + ' C:\\Users\\%username%\\Desktop\\' + filename) == 0:
+                print('video copy至桌面完成!')
+            print('正在删除手机中的video记录... ...')
+            if os.system('adb shell "rm /sdcard/' + filename) == 0:
+                print('手机中的video已删除.')  
+
+
+2018-05-24 23:10:20
+checkAdbConnectability()应该是有些异常，因为PC第一次开机连手机后run起来，总会报连接异常，暂未排查出原因
+
+
+2018-05-25 23:26:32
+新增了一个功能：readModifyrecord（）， 现在可以直接读记录了。不用在文件夹里找，直接读修改记录的内容至控制台中。
+# 读取修改记录
+def readModifyrecord():
+    readmepath = currunningpyfilepath + '\\' + '__pycache__' + '\\' + 'modifyRecord.txt'
+    # f = open(readmepath, 'r')
+    # for line in f:
+        # print(f.readline())
+    with open(readmepath, 'r') as f:
+        while True:
+            line = f.readline()
+            if not line:
+                break
+            print(line)
+
+
+
+2018-05-26 23:24:30
+修改了writeReadmefile()函数，应用了with open() as f:
+old code:
+        f = open(currunningpyfilepath + '\modifyRecord.txt', 'a')
+        # 遇到这个就结束
+        endflag = 'end' 
+        modifyRec = []
+        # 输入待记录的内容
+        print('请输入Modidy Note:\n')
+        for line in iter(input, endflag):
+            modifyRec.append(line)
+        # 写入输入的内容
+        f.write('\n\n' + getnowdatatime(0) + '\n')
+        for line in modifyRec:
+            f.write(line + '\n')
+        # 关闭文件
+        f.close()
+        print('记录已保存！')
+new code:
+        with open(currunningpyfilepath + '\modifyRecord.txt', 'a') as f:
+            endflag = 'end'
+            modifyRec = []
+            # 输入待记录的内容
+            print('请输入Modidy Note:\n')
+            for line in iter(input, endflag):
+                modifyRec.append(line)
+            # 写入输入的内容
+            f.write('\n\n' + getnowdatatime(0) + '\n')
+            for line in modifyRec:
+                f.write(line + '\n')
+            # 关闭文件
+            f.close()
+            print('记录已保存！')
+
+
+2018-05-27 00:01:06
+修改了checkAdbConnectability（）
+之前有一种情况没有考虑进去，就是电脑开机并第一次连手机时启动adb时这种情况输出的内容比较特殊。之前会认为连接异常，事实上根本就没有尝试连接。
+故当len(list) > 3时，多做了以下这个判断：
+    if liststr.find('daemon') != -1:
+        print('''ADB连接失败, 请check以下项:
+        1. 是否有连接上手机？请连接上手机选择选项6重新check连接性!
+        2. 是否有开启"开发者选项"?\n''')
+        return False
+
+
+		
+2018-05-27 22:21:16
+添加了新功能：可以随时查看第2/3/8项的使用方法，输入help2/3/8
+别外了解了   from functools import wraps 
+总是是为了解决函数应用了一般的装饰器后，函数对象的一般属性(如__name__/__doc__)会失效的问题
+def deco_cls_menus(*dargs, **dkw):
+    from functools import wraps
+    def _deco_cls_menus(func):
+        @wraps(func)
+        def wrapper(*args, **kw):
+            os.system('cls')
+            # dargs[0] = 1时, 需要chek adb连接性
+            if dargs[0] == 1:
+                if checkAdbConnectability() == True:
+                    print(f'正在执行所选操作, 请稍候... ...\n')
+                    output = func(*args, **kw)
+                    print(f'\n\n{menus}')
+                    return output
+                else:
+                    print(f'\n\n{menus}')
+            # dargs[0] = 0时, 不需要chek adb连接性
+            if dargs[0] == 0:
+                os.system('cls')
+                print(f'正在执行所选操作, 请稍候... ...\n')
+                output = func(*args, **kw)
+                print(f'\n\n{menus}')
+                return output
+        return wrapper
+    return _deco_cls_menus
+
