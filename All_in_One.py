@@ -581,7 +581,7 @@ def getIpconfigKeyData(cmd):
         
     print('\n电脑的', resultapklist[startIndex + 1].lstrip())
     
-# 获取username, 如mtk08814
+# 获取username, 如chinaren
 def getusername():
     namelist = os.popen('echo %username%').readlines()
     username = namelist[0].replace("\n", "")
