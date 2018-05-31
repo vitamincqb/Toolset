@@ -25,7 +25,7 @@ a. 获取PC IP address
 b. 生成指定大小的TXT档                                     
 c. 计时器(Stopwatch)                                       
                                                            
-Others:cmd/exit/cls/read/write/help2/help3                             
+Others:cmd/exit/cls/read/write/help2/help3/help8                             
 ------------------------------------------------------------
 '''
         
@@ -58,16 +58,17 @@ C:\Windows\System32\cmd.exe
 # 装饰器,用于在执行函数前时清屏和执行完函数时打印出menus
 def deco_cls_menus(*dargs, **dkw):
     '''
-    dargs[0] = 1时, 需要chek adb连接性
     dargs[0] = 0时, 不需要chek adb连接性
+    dargs[0] = 1时, 需要chek adb连接性
+    dargs[0] = 2时, 不需要cls和打印menus
     '''
     from functools import wraps
     def _deco_cls_menus(func):
         @wraps(func)
         def wrapper(*args, **kw):
-            os.system('cls')
             # dargs[0] = 1时, 需要chek adb连接性
             if dargs[0] == 1:
+                os.system('cls')
                 if checkAdbConnectability() == True:
                     print(f'正在执行所选操作, 请稍候... ...\n')
                     output = func(*args, **kw)
@@ -82,6 +83,11 @@ def deco_cls_menus(*dargs, **dkw):
                 output = func(*args, **kw)
                 print(f'\n\n{menus}')
                 return output
+            if dargs[0] == 2:
+                if checkAdbConnectability() == True:
+                    print(f'正在执行所选操作, 请稍候... ...\n')
+                    output = func(*args, **kw)
+                    return output
         return wrapper
     return _deco_cls_menus
     
@@ -252,6 +258,8 @@ def installapk():
 @deco_cls_menus(1)
 def exportapk(cmd = '8'):
     '''
+    导出APK to desk(前台正在使用的apk)　用法:
+    -----------------------------------------
     cmd='8' , 将导出当前前台正在使用的apk至桌面
     cmd='8,', 仅输出当前信息的包信息
     '''
@@ -370,7 +378,7 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                 if os.system(cmdCopyfiles) == 0:
                     print('Copyfiles copy完成!')
                     while(True):
-                        askme = input('是否删除手机中的Copyfiles folder?(y or n?')
+                        askme = input('是否删除手机中的Copyfiles folder?(y or n?)')
                         if askme in ('yes', 'YES', 'Yes', 'Y', 'y'):
                             os.system(cmdDELCopyfiles)
                             print('手机中的Copyfiles已del完成!')
@@ -470,6 +478,7 @@ def screenshot():
                 print('截图成功并保存至桌面!')
 
 # 执行cmd命令
+@deco_cls_menus(0)
 def executeCMD(cmd):
     stringList = cmd.splitlines() 
     for i in range(len(stringList)):
@@ -496,7 +505,8 @@ def turnOnOffMtklog(cmd = '3'):
     elif cmd == 'help3':
         # 输出帮助信息
         print(turnOnOffMtklog.__doc__)
-    else:
+    else: 
+        # ('3 1', '3, 1')
         executeCMD(cmdTurnOnMtklog)
         
 # 生成指定大小的TXT档
@@ -581,7 +591,7 @@ def getIpconfigKeyData(cmd):
         
     print('\n电脑的', resultapklist[startIndex + 1].lstrip())
     
-# 获取username, 如chinaren
+# 获取username, 如mtk08814
 def getusername():
     namelist = os.popen('echo %username%').readlines()
     username = namelist[0].replace("\n", "")
