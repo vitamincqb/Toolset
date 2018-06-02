@@ -1,83 +1,83 @@
 2018-05-17 16:40:17
-ĞÂÌí¼ÓÁËwriteReadme()º¯Êı£¬ÓÃÁË·½±ã¼ÇÂ¼Æ½Ê±¶Ô³ÌĞòµÄĞŞ¸Ä, ½øÈë¼ÇÂ¼µÄÈë¿ÚÊÇÊäÈë'readme'
+æ–°æ·»åŠ äº†writeReadme()å‡½æ•°ï¼Œç”¨äº†æ–¹ä¾¿è®°å½•å¹³æ—¶å¯¹ç¨‹åºçš„ä¿®æ”¹, è¿›å…¥è®°å½•çš„å…¥å£æ˜¯è¾“å…¥'readme'
 
 
 2018-05-17 16:42:54
-ĞŞ¸ÄÁËdeco_cls_menusº¯Êı£¬¼ÓÉîÁË¶Ô×°ÊÎÆ÷µÄÀí½â£¬×°ÊÎÆ÷Ò²¿ÉÒÔ´ø²ÎÊıÁË.´úÂë¸ü¼ò½à£¬Âß¼­¸üË³¡£
+ä¿®æ”¹äº†deco_cls_menuså‡½æ•°ï¼ŒåŠ æ·±äº†å¯¹è£…é¥°å™¨çš„ç†è§£ï¼Œè£…é¥°å™¨ä¹Ÿå¯ä»¥å¸¦å‚æ•°äº†.ä»£ç æ›´ç®€æ´ï¼Œé€»è¾‘æ›´é¡ºã€‚
 
 
 2018-05-17 16:48:45
-ĞŞ¸ÄÁËexportapk()ÖĞµÄÒ»¸öĞ¡bug, Ö®Ç°ÎŞ·¨µ¼³ölantern.apk, ÒòÎªÆäpackagenameÕÒ²»³öÀ´£¬ ½«findkey='com'ĞŞ¸ÄÎªfindkey = 'u0', Âß¼­²ÅºÏÀí. 
+ä¿®æ”¹äº†exportapk()ä¸­çš„ä¸€ä¸ªå°bug, ä¹‹å‰æ— æ³•å¯¼å‡ºlantern.apk, å› ä¸ºå…¶packagenameæ‰¾ä¸å‡ºæ¥ï¼Œ å°†findkey='com'ä¿®æ”¹ä¸ºfindkey = 'u0', é€»è¾‘æ‰åˆç†. 
 
 
 2018-05-17 17:42:37
-ÔÙ´ÎÍêÉÆÁËwriteModieyRec()
+å†æ¬¡å®Œå–„äº†writeModieyRec()
 
 
 2018-05-18 11:35:56
-ĞŞ¸ÄÁËwriteReadmefile(), È¥µôÁËimport partial
-Ã÷°×ÁËpartialÓÃ·¨¼°ÄÚÖÃº¯Êıiter()µÄÓÃ·¨. 
+ä¿®æ”¹äº†writeReadmefile(), å»æ‰äº†import partial
+æ˜ç™½äº†partialç”¨æ³•åŠå†…ç½®å‡½æ•°iter()çš„ç”¨æ³•. 
 https://www.cnblogs.com/yitouniu/p/5243136.html
 iter(object, sentinel)
 
-Python¹Ù·½ÎÄµµ¶ÔÓÚÕâÖÖĞÎÊ½µÄ½âÊÍÊÇ£º¡° If the second argument, sentinel, is given, then object must be a callable object. The iterator created in this case will call object with no arguments for each call to its __next__() method; if the value returned is equal to sentinel,StopIteration will be raised, otherwise the value will be returned.¡±¡£
+Pythonå®˜æ–¹æ–‡æ¡£å¯¹äºè¿™ç§å½¢å¼çš„è§£é‡Šæ˜¯ï¼šâ€œ If the second argument, sentinel, is given, then object must be a callable object. The iterator created in this case will call object with no arguments for each call to its __next__() method; if the value returned is equal to sentinel,StopIteration will be raised, otherwise the value will be returned.â€ã€‚
 
-Õâ¾ä»°µÄÒâË¼ÊÇËµ£ºÈç¹û´«µİÁËµÚ¶ş¸ö²ÎÊı£¬Ôòobject±ØĞëÊÇÒ»¸ö¿Éµ÷ÓÃµÄ¶ÔÏó£¨Èç£¬º¯Êı£©¡£´ËÊ±£¬iter´´½¨ÁËÒ»¸öµü´úÆ÷¶ÔÏó£¬Ã¿´Îµ÷ÓÃÕâ¸öµü´úÆ÷¶ÔÏóµÄ__next__()·½·¨Ê±£¬¶¼»áµ÷ÓÃobject¡£
+è¿™å¥è¯çš„æ„æ€æ˜¯è¯´ï¼šå¦‚æœä¼ é€’äº†ç¬¬äºŒä¸ªå‚æ•°ï¼Œåˆ™objectå¿…é¡»æ˜¯ä¸€ä¸ªå¯è°ƒç”¨çš„å¯¹è±¡ï¼ˆå¦‚ï¼Œå‡½æ•°ï¼‰ã€‚æ­¤æ—¶ï¼Œiteråˆ›å»ºäº†ä¸€ä¸ªè¿­ä»£å™¨å¯¹è±¡ï¼Œæ¯æ¬¡è°ƒç”¨è¿™ä¸ªè¿­ä»£å™¨å¯¹è±¡çš„__next__()æ–¹æ³•æ—¶ï¼Œéƒ½ä¼šè°ƒç”¨objectã€‚
 
-Èç¹û__next__µÄ·µ»ØÖµµÈÓÚsentinel£¬ÔòÅ×³öStopIterationÒì³££¬·ñÔò·µ»ØÏÂÒ»¸öÖµ.
+å¦‚æœ__next__çš„è¿”å›å€¼ç­‰äºsentinelï¼Œåˆ™æŠ›å‡ºStopIterationå¼‚å¸¸ï¼Œå¦åˆ™è¿”å›ä¸‹ä¸€ä¸ªå€¼.
 
-Èç±¾ÀıÖĞµÄÊäÈë£¬¿ÉÒÔ²»¶ÏµÄÊäÈë£¬µ«µ±ÊäÈë'end'Ê±¾Í½áÊøÊäÈë. ¼«ºÃ. 
+å¦‚æœ¬ä¾‹ä¸­çš„è¾“å…¥ï¼Œå¯ä»¥ä¸æ–­çš„è¾“å…¥ï¼Œä½†å½“è¾“å…¥'end'æ—¶å°±ç»“æŸè¾“å…¥. æå¥½. 
 
-        print('ĞŞ¸ÄÈÕÖ¾±£´æÔÚÒÔÏÂÎ»ÖÃ£º\n{}'.format(abspathOfRecfile))
+        print('ä¿®æ”¹æ—¥å¿—ä¿å­˜åœ¨ä»¥ä¸‹ä½ç½®ï¼š\n{}'.format(abspathOfRecfile))
         f = open(currunningpyfilepath + '\modifyRecord.txt', 'a')
         # inputModifyRec = partial(input)
-        # Óöµ½Õâ¸ö¾Í½áÊø
+        # é‡åˆ°è¿™ä¸ªå°±ç»“æŸ
         endflag = 'end' 
         modifyRec = []
-        # ÊäÈë´ı¼ÇÂ¼µÄÄÚÈİ
-        print('ÇëÊäÈëModidy Note:\n')
+        # è¾“å…¥å¾…è®°å½•çš„å†…å®¹
+        print('è¯·è¾“å…¥Modidy Note:\n')
         # for line in iter(inputModifyRec, endflag):
         for line in iter(input, endflag):
             modifyRec.append(line)
-        # Ğ´ÈëÊäÈëµÄÄÚÈİ
+        # å†™å…¥è¾“å…¥çš„å†…å®¹
         f.write('\n\n' + getnowdatatime(0) + '\n')
         for line in modifyRec:
             f.write(line + '\n')
-        # ¹Ø±ÕÎÄ¼ş
+        # å…³é—­æ–‡ä»¶
         f.close()
-        print('¼ÇÂ¼ÒÑ±£´æ£¡')
+        print('è®°å½•å·²ä¿å­˜ï¼')
 
 
 
 2018-05-19 14:52:58
-ĞŞ¸ÄÁËcheckAdbConnectability£¨£©£¬ÒòÎªµ±ÓĞ¶àÌ¨ÊÖ»úÍ¬Ê±Á¬ÉÏadbÊ±£¬»áÊ¶±ğÎªÁ¬½ÓadbÒì³££¬ÏÖÔÚÈç¹ûÁ¬½ÓÁË¶àÌ¨ÊÖ»úÉè±¸£¬»áÓĞÌáÊ¾ÈÃÖ»Á¬½ÓÒ»Ì¨²ÅÄÜÕı³£²Ù×÷. 
+ä¿®æ”¹äº†checkAdbConnectabilityï¼ˆï¼‰ï¼Œå› ä¸ºå½“æœ‰å¤šå°æ‰‹æœºåŒæ—¶è¿ä¸Šadbæ—¶ï¼Œä¼šè¯†åˆ«ä¸ºè¿æ¥adbå¼‚å¸¸ï¼Œç°åœ¨å¦‚æœè¿æ¥äº†å¤šå°æ‰‹æœºè®¾å¤‡ï¼Œä¼šæœ‰æç¤ºè®©åªè¿æ¥ä¸€å°æ‰èƒ½æ­£å¸¸æ“ä½œ. 
 liststr = ','.join(list).replace('\n', '').strip()
 elif liststr.count('device') > 1:
-    print('µ±Ç°Á¬½ÓÁË¶à¸öÉè±¸£¬ÇëÈ·±£Ö»Á¬½ÓÒ»¸öÉè±¸²ÅÄÜÕı³£²Ù×÷!')
+    print('å½“å‰è¿æ¥äº†å¤šä¸ªè®¾å¤‡ï¼Œè¯·ç¡®ä¿åªè¿æ¥ä¸€ä¸ªè®¾å¤‡æ‰èƒ½æ­£å¸¸æ“ä½œ!')
     return False
 
 
 2018-05-22 15:01:39
-ĞŞ¸ÄÁËgetusername£¨£©
-Ö®Ç°´Ëº¯ÊıÖ»ÊÊÓÃÓÚÔÚ¹«Ë¾µçÄÔÉÏÔËĞĞ£¬Èç¹ûÔÚ¼ÒÀïË½ÈËµçÄÔÉÏÔËĞĞ»á³ö´í¡£
-ĞŞ¸ÄÁË»ñÈ¡usernameµÄÂß¼­£¬ÏÖÔÚÔÚ¼ÒÒ²¿ÉÒÔÔËĞĞÁË¡£
+ä¿®æ”¹äº†getusernameï¼ˆï¼‰
+ä¹‹å‰æ­¤å‡½æ•°åªé€‚ç”¨äºåœ¨å…¬å¸ç”µè„‘ä¸Šè¿è¡Œï¼Œå¦‚æœåœ¨å®¶é‡Œç§äººç”µè„‘ä¸Šè¿è¡Œä¼šå‡ºé”™ã€‚
+ä¿®æ”¹äº†è·å–usernameçš„é€»è¾‘ï¼Œç°åœ¨åœ¨å®¶ä¹Ÿå¯ä»¥è¿è¡Œäº†ã€‚
 old code:
-# »ñÈ¡username, Èçmtk08814
+# è·å–username, å¦‚mtk08814
 def getusername():
     name = os.popen('echo %username%').readlines()
-    # »ñÈ¡µ±Ç°µÄusername
+    # è·å–å½“å‰çš„username
     return name[0][0:8]
 
 new code:
 def getusername():
     namelist = os.popen('echo %username%').readlines()
     username = namelist[0].replace("\n", "")
-    # »ñÈ¡µ±Ç°µÄusername
+    # è·å–å½“å‰çš„username
     return username
 
 
 2018-05-22 16:24:34
-Ó¦ÓÃĞÂµÄ×Ö·û´®¸ñÊ½·½Ê½f-stringÀ´Ìæ»»Ô­À´µÄformat
+åº”ç”¨æ–°çš„å­—ç¬¦ä¸²æ ¼å¼æ–¹å¼f-stringæ¥æ›¿æ¢åŸæ¥çš„format
 1. print('my name is {}'.format(name))
    print(f'my name is {name}')
 2. x = 11/3
@@ -88,7 +88,7 @@ def getusername():
 
 
 2018-05-22 22:12:52
-½øÒ»²½ÓÃf-stringÌæ»»ËùÓĞµÄformatÀ´¸ñÊ½»¯×Ö·û´®£¨µ±Ç°ÒÑÈ«²¿Ìæ»»ËùÓĞµÄformat£©
+è¿›ä¸€æ­¥ç”¨f-stringæ›¿æ¢æ‰€æœ‰çš„formatæ¥æ ¼å¼åŒ–å­—ç¬¦ä¸²ï¼ˆå½“å‰å·²å…¨éƒ¨æ›¿æ¢æ‰€æœ‰çš„formatï¼‰
     # root.geometry("{}x{}+{:.0f}+{:.0f}".format(ww,wh,x,y))
     root.geometry(f"{ww}x{wh}+{x:.0f}+{y:.0f}")
 
@@ -97,25 +97,25 @@ def getusername():
 
 
 2018-05-24 23:07:17
-¼ÓÇ¿ÁËrecordScreen()µÄ¾À´íÄÜÁ¦£¬ÒòÎªµ±Ç°ÔÚÂ¼ÆÁÊ±£¬ÓĞÊ±°´CTRL+CÖĞÖ¹Â¼ÆÁºó£¬·¢ÏÖvideo²¢Î´copyÖÁPC¶Ë. 
+åŠ å¼ºäº†recordScreen()çš„çº é”™èƒ½åŠ›ï¼Œå› ä¸ºå½“å‰åœ¨å½•å±æ—¶ï¼Œæœ‰æ—¶æŒ‰CTRL+Cä¸­æ­¢å½•å±åï¼Œå‘ç°videoå¹¶æœªcopyè‡³PCç«¯. 
     finally:
         if isexistfolder(filename) == True:
-            print('\nÊÖ¶¯ÖĞÖ¹Â¼ÖÆ, call finally!')
-            print('ÕıÔÚ½«video copyÖÁ×ÀÃæ,ÇëÉÔºò... ...')
+            print('\næ‰‹åŠ¨ä¸­æ­¢å½•åˆ¶, call finally!')
+            print('æ­£åœ¨å°†video copyè‡³æ¡Œé¢,è¯·ç¨å€™... ...')
             if os.system('adb pull /sdcard/' + filename + ' C:\\Users\\%username%\\Desktop\\' + filename) == 0:
-                print('video copyÖÁ×ÀÃæÍê³É!')
-            print('ÕıÔÚÉ¾³ıÊÖ»úÖĞµÄvideo¼ÇÂ¼... ...')
+                print('video copyè‡³æ¡Œé¢å®Œæˆ!')
+            print('æ­£åœ¨åˆ é™¤æ‰‹æœºä¸­çš„videoè®°å½•... ...')
             if os.system('adb shell "rm /sdcard/' + filename) == 0:
-                print('ÊÖ»úÖĞµÄvideoÒÑÉ¾³ı.')  
+                print('æ‰‹æœºä¸­çš„videoå·²åˆ é™¤.')  
 
 
 2018-05-24 23:10:20
-checkAdbConnectability()Ó¦¸ÃÊÇÓĞĞ©Òì³££¬ÒòÎªPCµÚÒ»´Î¿ª»úÁ¬ÊÖ»úºórunÆğÀ´£¬×Ü»á±¨Á¬½ÓÒì³££¬ÔİÎ´ÅÅ²é³öÔ­Òò
+checkAdbConnectability()åº”è¯¥æ˜¯æœ‰äº›å¼‚å¸¸ï¼Œå› ä¸ºPCç¬¬ä¸€æ¬¡å¼€æœºè¿æ‰‹æœºårunèµ·æ¥ï¼Œæ€»ä¼šæŠ¥è¿æ¥å¼‚å¸¸ï¼Œæš‚æœªæ’æŸ¥å‡ºåŸå› 
 
 
 2018-05-25 23:26:32
-ĞÂÔöÁËÒ»¸ö¹¦ÄÜ£ºreadModifyrecord£¨£©£¬ ÏÖÔÚ¿ÉÒÔÖ±½Ó¶Á¼ÇÂ¼ÁË¡£²»ÓÃÔÚÎÄ¼ş¼ĞÀïÕÒ£¬Ö±½Ó¶ÁĞŞ¸Ä¼ÇÂ¼µÄÄÚÈİÖÁ¿ØÖÆÌ¨ÖĞ¡£
-# ¶ÁÈ¡ĞŞ¸Ä¼ÇÂ¼
+æ–°å¢äº†ä¸€ä¸ªåŠŸèƒ½ï¼šreadModifyrecordï¼ˆï¼‰ï¼Œ ç°åœ¨å¯ä»¥ç›´æ¥è¯»è®°å½•äº†ã€‚ä¸ç”¨åœ¨æ–‡ä»¶å¤¹é‡Œæ‰¾ï¼Œç›´æ¥è¯»ä¿®æ”¹è®°å½•çš„å†…å®¹è‡³æ§åˆ¶å°ä¸­ã€‚
+# è¯»å–ä¿®æ”¹è®°å½•
 def readModifyrecord():
     readmepath = currunningpyfilepath + '\\' + '__pycache__' + '\\' + 'modifyRecord.txt'
     # f = open(readmepath, 'r')
@@ -131,75 +131,74 @@ def readModifyrecord():
 
 
 2018-05-26 23:24:30
-ĞŞ¸ÄÁËwriteReadmefile()º¯Êı£¬Ó¦ÓÃÁËwith open() as f:
+ä¿®æ”¹äº†writeReadmefile()å‡½æ•°ï¼Œåº”ç”¨äº†with open() as f:
 old code:
         f = open(currunningpyfilepath + '\modifyRecord.txt', 'a')
-        # Óöµ½Õâ¸ö¾Í½áÊø
+        # é‡åˆ°è¿™ä¸ªå°±ç»“æŸ
         endflag = 'end' 
         modifyRec = []
-        # ÊäÈë´ı¼ÇÂ¼µÄÄÚÈİ
-        print('ÇëÊäÈëModidy Note:\n')
+        # è¾“å…¥å¾…è®°å½•çš„å†…å®¹
+        print('è¯·è¾“å…¥Modidy Note:\n')
         for line in iter(input, endflag):
             modifyRec.append(line)
-        # Ğ´ÈëÊäÈëµÄÄÚÈİ
+        # å†™å…¥è¾“å…¥çš„å†…å®¹
         f.write('\n\n' + getnowdatatime(0) + '\n')
         for line in modifyRec:
             f.write(line + '\n')
-        # ¹Ø±ÕÎÄ¼ş
+        # å…³é—­æ–‡ä»¶
         f.close()
-        print('¼ÇÂ¼ÒÑ±£´æ£¡')
+        print('è®°å½•å·²ä¿å­˜ï¼')
 new code:
         with open(currunningpyfilepath + '\modifyRecord.txt', 'a') as f:
             endflag = 'end'
             modifyRec = []
-            # ÊäÈë´ı¼ÇÂ¼µÄÄÚÈİ
-            print('ÇëÊäÈëModidy Note:\n')
+            # è¾“å…¥å¾…è®°å½•çš„å†…å®¹
+            print('è¯·è¾“å…¥Modidy Note:\n')
             for line in iter(input, endflag):
                 modifyRec.append(line)
-            # Ğ´ÈëÊäÈëµÄÄÚÈİ
+            # å†™å…¥è¾“å…¥çš„å†…å®¹
             f.write('\n\n' + getnowdatatime(0) + '\n')
             for line in modifyRec:
                 f.write(line + '\n')
-            # ¹Ø±ÕÎÄ¼ş
+            # å…³é—­æ–‡ä»¶
             f.close()
-            print('¼ÇÂ¼ÒÑ±£´æ£¡')
-
+            print('è®°å½•å·²ä¿å­˜ï¼')
 
 2018-05-27 00:01:06
-ĞŞ¸ÄÁËcheckAdbConnectability£¨£©
-Ö®Ç°ÓĞÒ»ÖÖÇé¿öÃ»ÓĞ¿¼ÂÇ½øÈ¥£¬¾ÍÊÇµçÄÔ¿ª»ú²¢µÚÒ»´ÎÁ¬ÊÖ»úÊ±Æô¶¯adbÊ±ÕâÖÖÇé¿öÊä³öµÄÄÚÈİ±È½ÏÌØÊâ¡£Ö®Ç°»áÈÏÎªÁ¬½ÓÒì³££¬ÊÂÊµÉÏ¸ù±¾¾ÍÃ»ÓĞ³¢ÊÔÁ¬½Ó¡£
-¹Êµ±len(list) > 3Ê±£¬¶à×öÁËÒÔÏÂÕâ¸öÅĞ¶Ï£º
+ä¿®æ”¹äº†checkAdbConnectabilityï¼ˆï¼‰
+ä¹‹å‰æœ‰ä¸€ç§æƒ…å†µæ²¡æœ‰è€ƒè™‘è¿›å»ï¼Œå°±æ˜¯ç”µè„‘å¼€æœºå¹¶ç¬¬ä¸€æ¬¡è¿æ‰‹æœºæ—¶å¯åŠ¨adbæ—¶è¿™ç§æƒ…å†µè¾“å‡ºçš„å†…å®¹æ¯”è¾ƒç‰¹æ®Šã€‚ä¹‹å‰ä¼šè®¤ä¸ºè¿æ¥å¼‚å¸¸ï¼Œäº‹å®ä¸Šæ ¹æœ¬å°±æ²¡æœ‰å°è¯•è¿æ¥ã€‚
+æ•…å½“len(list) > 3æ—¶ï¼Œå¤šåšäº†ä»¥ä¸‹è¿™ä¸ªåˆ¤æ–­ï¼š
     if liststr.find('daemon') != -1:
-        print('''ADBÁ¬½ÓÊ§°Ü, ÇëcheckÒÔÏÂÏî:
-        1. ÊÇ·ñÓĞÁ¬½ÓÉÏÊÖ»ú£¿ÇëÁ¬½ÓÉÏÊÖ»úÑ¡ÔñÑ¡Ïî6ÖØĞÂcheckÁ¬½ÓĞÔ!
-        2. ÊÇ·ñÓĞ¿ªÆô"¿ª·¢ÕßÑ¡Ïî"?\n''')
+        print('''ADBè¿æ¥å¤±è´¥, è¯·checkä»¥ä¸‹é¡¹:
+        1. æ˜¯å¦æœ‰è¿æ¥ä¸Šæ‰‹æœºï¼Ÿè¯·è¿æ¥ä¸Šæ‰‹æœºé€‰æ‹©é€‰é¡¹6é‡æ–°checkè¿æ¥æ€§!
+        2. æ˜¯å¦æœ‰å¼€å¯"å¼€å‘è€…é€‰é¡¹"?\n''')
         return False
 
 
 		
 2018-05-27 22:21:16
-Ìí¼ÓÁËĞÂ¹¦ÄÜ£º¿ÉÒÔËæÊ±²é¿´µÚ2/3/8ÏîµÄÊ¹ÓÃ·½·¨£¬ÊäÈëhelp2/3/8
-±ğÍâÁË½âÁË   from functools import wraps 
-×ÜÊÇÊÇÎªÁË½â¾öº¯ÊıÓ¦ÓÃÁËÒ»°ãµÄ×°ÊÎÆ÷ºó£¬º¯Êı¶ÔÏóµÄÒ»°ãÊôĞÔ(Èç__name__/__doc__)»áÊ§Ğ§µÄÎÊÌâ
+æ·»åŠ äº†æ–°åŠŸèƒ½ï¼šå¯ä»¥éšæ—¶æŸ¥çœ‹ç¬¬2/3/8é¡¹çš„ä½¿ç”¨æ–¹æ³•ï¼Œè¾“å…¥help2/3/8
+åˆ«å¤–äº†è§£äº†   from functools import wraps 
+æ€»æ˜¯æ˜¯ä¸ºäº†è§£å†³å‡½æ•°åº”ç”¨äº†ä¸€èˆ¬çš„è£…é¥°å™¨åï¼Œå‡½æ•°å¯¹è±¡çš„ä¸€èˆ¬å±æ€§(å¦‚__name__/__doc__)ä¼šå¤±æ•ˆçš„é—®é¢˜
 def deco_cls_menus(*dargs, **dkw):
     from functools import wraps
     def _deco_cls_menus(func):
         @wraps(func)
         def wrapper(*args, **kw):
             os.system('cls')
-            # dargs[0] = 1Ê±, ĞèÒªchek adbÁ¬½ÓĞÔ
+            # dargs[0] = 1æ—¶, éœ€è¦chek adbè¿æ¥æ€§
             if dargs[0] == 1:
                 if checkAdbConnectability() == True:
-                    print(f'ÕıÔÚÖ´ĞĞËùÑ¡²Ù×÷, ÇëÉÔºò... ...\n')
+                    print(f'æ­£åœ¨æ‰§è¡Œæ‰€é€‰æ“ä½œ, è¯·ç¨å€™... ...\n')
                     output = func(*args, **kw)
                     print(f'\n\n{menus}')
                     return output
                 else:
                     print(f'\n\n{menus}')
-            # dargs[0] = 0Ê±, ²»ĞèÒªchek adbÁ¬½ÓĞÔ
+            # dargs[0] = 0æ—¶, ä¸éœ€è¦chek adbè¿æ¥æ€§
             if dargs[0] == 0:
                 os.system('cls')
-                print(f'ÕıÔÚÖ´ĞĞËùÑ¡²Ù×÷, ÇëÉÔºò... ...\n')
+                print(f'æ­£åœ¨æ‰§è¡Œæ‰€é€‰æ“ä½œ, è¯·ç¨å€™... ...\n')
                 output = func(*args, **kw)
                 print(f'\n\n{menus}')
                 return output
