@@ -13,7 +13,7 @@ currunningpyfilepath = os.path.split(os.path.realpath(__file__))[0]
 menus = '''===================Based on Python3.6.5=====================
 0. Exit                                                    
 1. 截图并copy至桌面                                        
-2. Copy文件(MTKlog/DCIM/Copyfiles)至桌面                 
+2. Copy文件(MTKlog/DCIM/00Tempfile)至桌面                
 3. 打开MTKlog                                              
 4. Copy文件至手机                                          
 5. 手机录屏并copy至桌面                                    
@@ -25,7 +25,7 @@ a. 获取PC IP address
 b. 生成指定大小的TXT档                                     
 c. 计时器(Stopwatch)                                       
                                                            
-Others:cmd/exit/cls/read/write/help2/help3/help8                             
+Others:cmd/exit/cls/read/write/help2/help3/help4/help8                             
 ------------------------------------------------------------
 '''
         
@@ -90,7 +90,19 @@ def deco_cls_menus(*dargs, **dkw):
                     return output
         return wrapper
     return _deco_cls_menus
-    
+
+# 获取各个功能项的使用说明档
+@deco_cls_menus(0)
+def helpfile(cmd):
+    if cmd == 'help2':
+        print(copyMtklogOrPicToDesk.__doc__)
+    if cmd == 'help3':
+        print(turnOnOffMtklog.__doc__)
+    if cmd == 'help4':
+        print(copytempfile2Phone.__doc__)
+    if cmd == 'help8':
+        print(exportapk.__doc__)
+        
 # 判断手机/sdcard/下是否存在指定的文件夹名
 def isexistfolder(foldername):
     try:
@@ -253,7 +265,9 @@ def installapk():
                 break
     except KeyboardInterrupt:
         print('\n手动中止操作:KeyboardInterrupt')
-
+    except EOFError:
+        print('\n未知异常: EOFError')
+        
 # 导出手机当前前台正在使用的apk
 @deco_cls_menus(1)
 def exportapk(cmd = '8'):
@@ -299,63 +313,75 @@ def exportapk(cmd = '8'):
         else:
             return
     
-# 复制文件、文件夹至手机中的Copyfiles文件夹
+# 复制文件、文件夹至手机中的00Tempfile文件夹
 @deco_cls_menus(1)
 def copyfiles2Phone():
+    '''
+    Copy文件至手机　用法:
+    -----------------------------------------
+    cmd='4' , 复制手机中的00Tempfile文件夹至桌面
+    cmd='4,', 在手机根目录新建00Tempfile
+    '''
     try:
-        while(True):
-            soursefilepath = input('请将要copy的文件或文件夹拖入Console中:')
-            if os.path.exists(soursefilepath) == False:
-                print('路径不存在，请确认?!')
-                break
-            else:
-                destinationpath = ' /sdcard/Copyfiles'
-                if isexistfolder('Copyfiles') == True: 
-                    print('根目录下已存在Copyfiles folder，文件将直接copy至Copyfiles内!')
-                    print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
-                    if os.system('adb push ' + soursefilepath + ' ' + destinationpath) == 0:
-                        print('文件已copy至根目录下的Copyfile folder中!')
+        if cmd == '4':
+            while(True):
+                soursefilepath = input('请将要copy的文件或文件夹拖入Console中:')
+                if os.path.exists(soursefilepath) == False:
+                    print('路径不存在，请确认?!')
+                    break                                                                  
                 else:
-                    print('在手机根目录新建folder:Copyfiles成功，copy的文件将保存在此folder中!')
-                    print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
-                    os.system('adb shell mkdir sdcard/Copyfiles')
-                    if os.system('adb push ' + soursefilepath + destinationpath) == 0:
-                        print('文件已copy至根目录下的Copyfile folder中!')
-                break
+                    destinationpath = ' /sdcard/00Tempfile'
+                    if isexistfolder('00Tempfile') == True: 
+                        print('根目录下已存在00Tempfile folder，文件将直接copy至00Tempfile内!')
+                        print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
+                        if os.system('adb push ' + soursefilepath + ' ' + destinationpath) == 0:
+                            print('文件已copy至根目录下的Copyfile folder中!')
+                    else:
+                        print('在手机根目录新建folder:00Tempfile成功，copy的文件将保存在此folder中!')
+                        print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
+                        os.system('adb shell mkdir sdcard/00Tempfile')
+                        if os.system('adb push ' + soursefilepath + destinationpath) == 0:
+                            print('文件已copy至根目录下的Copyfile folder中!')
+                    break
+        if cmd == '4,':
+            os.system('adb shell mkdir sdcard/00Tempfile')
+            print('新建文件夹00Tempfile成功!')
     except KeyboardInterrupt:
         print('\n手动中止操作:KeyboardInterrupt')
+    except EOFError:
+        print('\n未知异常:EOFError')
 
 # 从手机里copy mtklog至桌面
 @deco_cls_menus(1)
 def copyMtklogOrPicToDesk(cmdflag = '2'):
     '''
-    Copy文件(MTKlog/DCIM/Copyfiles)至桌面 用法：
+    Copy文件(MTKlog/DCIM/00Tempfile)至桌面 用法：
     -------------------------------------------
     1:仅删除mtklog文件夹
     可输入:'d m', 'd,m', 'd mtklog', 'd,mtklog', 'del mtklog', 'del,mtklog', 'del m', 'del,m'
     2:仅删除DCIM文件夹
     可输入:'d d','d,d',  'del d', 'del,d', 'del dcim','d dcim', 'del,dcim', 'd,dcim'
-    3:仅删除Copyfiles文件夹
-    可输入:'d cf', 'd c','d,cf', 'd,c', 'del cf', 'del c',  'del,cf', 'del,c', 
+    3:仅删除00Tempfile文件夹
+    可输入:'d tf', 'd t','d,tf', 'd,t', 'del tf', 'del t',  'del,tf', 'del,t', 
     4:复制Mtklog至桌面then删除手机中的Mtklog文件夹
     可输入：'2', '2,', '2m', 'mtklog', '2mtklog', 
     5:复制Mtklog/DCIM文件夹then删除手机中的Mtklog/DCIM文件夹 
     可输入:'2mp','mp','2md', 'md'
     6:复制DCIM文件夹至桌面then删除DCIM文件夹
     可输入：'2d', '2dcim', 'dcim'
-    7:复制Copyfiles至桌面then询问是否删除copyfiles文件夹
-    可输入：'2c', '2cf', 'cf', 'copyfiles', 'copyfile'
+    7:复制00Tempfile至桌面then询问是否删除00Tempfile文件夹
+    可输入：'2t', '2tf', 'tf', 'Tempfile', 'tempfile'
     '''
     try:
         path = 'C:\\Users\\' + getusername() + '\\Desktop'
         cmdMtklogPre = 'adb pull /sdcard/mtklog C:\\Users\\%username%\\Desktop\\'
         cmdPicPre = 'adb pull /sdcard/DCIM C:\\Users\\%username%\\Desktop\\'
-        cmdCopyfilesPre = 'adb pull /sdcard/Copyfiles C:\\Users\\%username%\\Desktop\\'
+        cmd00TempfilePre = 'adb pull /sdcard/00Tempfile C:\\Users\\%username%\\Desktop\\'
         cmdDELMtklog = 'adb shell rm -r /sdcard/mtklog'
         cmdDELPic = 'adb shell rm -r /sdcard/DCIM'
-        cmdDELCopyfiles = 'adb shell rm -r /sdcard/Copyfiles'
+        cmdDEL00Tempfile = 'adb shell rm -r /sdcard/00Tempfile'
                  
-        # 可以根据输入分别删除mtklog/DCIM/Copyfiles        
+        # 可以根据输入分别删除mtklog/DCIM/00Tempfile      
         def delfolder():
             try:
                 if cmdflag in ('del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog'):
@@ -364,35 +390,36 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                 if cmdflag in ('del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d','d,d', 'd,dcim'):
                     if os.system(cmdDELPic) == 0:
                         print('DCIM文件夹删除成功!')
-                if cmdflag in ('del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c'):
-                    if os.system(cmdDELCopyfiles) == 0:
-                        print('Copyfiles文件夹删除成功!')
+                if cmdflag in ('del tf', 'del t', 'd tf', 'd t', 'del,tf', 'del,t', 'd,tf', 'd,t'):
+                    if os.system(cmdDEL00Tempfile) == 0:
+                        print('00Tempfile文件夹删除成功!')
             except Exception:
                 print('文件夹不存在,无法删除')
-        # 仅copy Copyfiles folder至桌面
-        def copyCopyfilesOnly():
-            if isexistfolder('Copyfiles') == True:
-                foldername = creatfolder(path, 'Copyfiles')
-                cmdCopyfiles = cmdCopyfilesPre + foldername
-                # 如果copy成功，将询问是否删除手机内Copyfiles文件夹
-                if os.system(cmdCopyfiles) == 0:
-                    print('Copyfiles copy完成!')
+                
+        # 仅copy 00Tempfile folder至桌面
+        def copyTempfileOnly():
+            if isexistfolder('00Tempfile') == True:
+                foldername = creatfolder(path, '00Tempfile')
+                cmd00Tempfile = cmd00TempfilePre + foldername
+                # 如果copy成功，将询问是否删除手机内00Tempfile文件夹
+                if os.system(cmd00Tempfile) == 0:
+                    print('00Tempfile copy完成!')
                     while(True):
-                        askme = input('是否删除手机中的Copyfiles folder?(y or n?)')
+                        askme = input('是否删除手机中的00Tempfile folder?(y or n?)')
                         if askme in ('yes', 'YES', 'Yes', 'Y', 'y'):
-                            os.system(cmdDELCopyfiles)
-                            print('手机中的Copyfiles已del完成!')
+                            os.system(cmdDEL00Tempfile)
+                            print('手机中的00Tempfile已del完成!')
                             return
                         elif askme in ('no', 'NO', 'No', 'N', 'n'):
-                            print('手机中的Copyfiles将保留!')
+                            print('手机中的00Tempfile将保留!')
                             return
                         else:
                             print('输入有误, 请重新输入！')
                             return
                 else:
-                    print('Copyfiles文件夹copy失败!')
+                    print('00Tempfile文件夹copy失败!')
             else:
-                print('Copyfiles文件夹不存在,无法copy!')
+                print('00Tempfile文件夹不存在,无法copy!')
                     
         # 仅copy Mtklog至桌面
         def copyMtklogOnly(confilename = '', flag = 0):
@@ -457,10 +484,8 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
             copyMtklogDcimOrOthers()
         elif cmdflag in ('2d', '2dcim', 'dcim'):
             copyPicOnly()
-        elif cmdflag in ('2c', '2cf', 'copyfiles', 'copyfile', 'cf'):
-            copyCopyfilesOnly()
-        elif cmdflag == 'help2':
-            print(copyMtklogOrPicToDesk.__doc__)
+        elif cmdflag in ('2t', '2tf', 'tf', 'Tempfile', 'tempfile'):
+            copyTempfileOnly()
         else:
             delfolder()
             
@@ -502,9 +527,6 @@ def turnOnOffMtklog(cmd = '3'):
     elif cmd in ('3 0', '3,0'):
         # 当前默认只开启mobile log，因为这个最常用
         executeCMD(cmdTurnOffMtklog)
-    elif cmd == 'help3':
-        # 输出帮助信息
-        print(turnOnOffMtklog.__doc__)
     else: 
         # ('3 1', '3, 1')
         executeCMD(cmdTurnOnMtklog)
@@ -708,62 +730,68 @@ def main():
     selItem2Tuple = (
                 'del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog', \
                 'del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d','d,d', 'd,dcim', \
-                'del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c', \
+                'del tf', 'del t', 'd tf', 'd t', 'del,tf', 'del,t', 'd,tf', 'd,t', \
                 '2', '2m', 'mtklog', '2mtklog', '2,', \
                 '2mp','mp','2md', 'md', \
                 '2d', '2dcim', 'dcim', \
                 'help2', \
-                '2c', '2cf', 'copyfiles', 'copyfile', 'cf')
+                '2t', '2tf', 'Tempfile', 'tempfile', 'tf')
                 
     while True:
-        num = input('请输入需要执行项的序号:')
-        selString = num.strip().lower()
-        if selString in ('0', 'exit'):
-            break
-        elif selString == '1':
-            screenshot()
-        elif selString in selItem2Tuple:
-            copyMtklogOrPicToDesk(selString)
-        elif selString in ('3', '3 0', '3 1', '3,0', '3,1', 'help3'):
-            turnOnOffMtklog(selString)
-        elif selString == '4':
-            copyfiles2Phone()
-        elif selString == '5':
-            recordScreen()
-        elif selString == '6':
-            checkAdbConnectability(1)
-        elif selString == '7':
-            installapk()
-        elif selString in ('8', '8,', 'help8'):
-            exportapk(selString)
-        elif selString == '9':
-            executeCMD(cmdLogcat)
-        elif selString == 'a':
-            getIpconfigKeyData(cmdIpconfig)
-        elif selString in ('b', 'b,', 'b,sd'):
-            generateTXTFile()
-        elif selString == 'c':
-            stopwatchApp()
-        # 输入'cmd'会进入console环境
-        elif selString == 'cmd':
-            executeCMD(cmdswitchConsolePy)
-        # 输入'cls'会清屏
-        elif selString == 'cls':
-            os.system('cls')
-            print(f'\n\n{menus}')
-        elif selString == 'write':
-            writeReadmefile()
-        elif selString == 'read':
-            readModifyrecord()
-        else:
-            # 如果连续输入序号错误7次会清屏一次，避免看不到菜单
-            inputErrorNum = inputErrorNum + 1
-            print('当前输入有误!')
-            if inputErrorNum >= 7: 
-                inputErrorNum = 0
+        try:
+            num = input('请输入需要执行项的序号:')
+            selString = num.strip().lower()
+            if selString in ('0', 'exit'):
+                break
+            elif selString == '1':
+                screenshot()
+            elif selString in selItem2Tuple:
+                copyMtklogOrPicToDesk(selString)
+            elif selString in ('3', '3 0', '3 1', '3,0', '3,1'):
+                turnOnOffMtklog(selString)
+            elif selString in ('4', '4,'):
+                copytempfile2Phone(selString)
+            elif selString == '5':
+                recordScreen()
+            elif selString == '6':
+                checkAdbConnectability(1)
+            elif selString == '7':
+                installapk()
+            elif selString in ('8', '8,'):
+                exportapk(selString)
+            elif selString == '9':
+                executeCMD(cmdLogcat)
+            elif selString == 'a':
+                getIpconfigKeyData(cmdIpconfig)
+            elif selString in ('b', 'b,', 'b,sd'):
+                generateTXTFile()
+            elif selString == 'c':
+                stopwatchApp()
+            # 输入'cmd'会进入console环境
+            elif selString == 'cmd':
+                executeCMD(cmdswitchConsolePy)
+            # 输入'cls'会清屏
+            elif selString == 'cls':               
                 os.system('cls')
                 print(f'\n\n{menus}')
-            continue
+            elif selString == 'write':
+                writeReadmefile()
+            elif selString == 'read':
+                readModifyrecord()
+            elif selString in ('help2', 'help3', 'help4', 'help8'):
+                helpfile(selString)
+            else:
+                # 如果连续输入序号错误7次会清屏一次，避免看不到菜单
+                inputErrorNum = inputErrorNum + 1
+                print('当前输入有误!')
+                if inputErrorNum >= 7: 
+                    inputErrorNum = 0
+                    os.system('cls')
+                    print(f'\n\n{menus}')
+                continue
+        except (KeyboardInterrupt, EOFError):
+            print('@_@　捕捉到了异常. 请重新输入或重新启动tool!')
+            print(f'\n\n{menus}')
                 
 #--------------------主程序--------------------
 if __name__ == '__main__':
