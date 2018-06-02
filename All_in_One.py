@@ -13,7 +13,7 @@ currunningpyfilepath = os.path.split(os.path.realpath(__file__))[0]
 menus = '''===================Based on Python3.6.5=====================
 0. Exit                                                    
 1. 截图并copy至桌面                                        
-2. Copy文件(MTKlog/DCIM/00Tempfile)至桌面                
+2. Copy文件(MTKlog/DCIM/00Tempfile)至桌面                 
 3. 打开MTKlog                                              
 4. Copy文件至手机                                          
 5. 手机录屏并copy至桌面                                    
@@ -90,7 +90,7 @@ def deco_cls_menus(*dargs, **dkw):
                     return output
         return wrapper
     return _deco_cls_menus
-
+    
 # 获取各个功能项的使用说明档
 @deco_cls_menus(0)
 def helpfile(cmd):
@@ -267,7 +267,7 @@ def installapk():
         print('\n手动中止操作:KeyboardInterrupt')
     except EOFError:
         print('\n未知异常: EOFError')
-        
+
 # 导出手机当前前台正在使用的apk
 @deco_cls_menus(1)
 def exportapk(cmd = '8'):
@@ -277,9 +277,6 @@ def exportapk(cmd = '8'):
     cmd='8' , 将导出当前前台正在使用的apk至桌面
     cmd='8,', 仅输出当前信息的包信息
     '''
-    if cmd == 'help8':
-        print(exportapk.__doc__)
-        return
     # 获取包info
     packagefileline = os.popen('adb shell dumpsys window | findstr mCurrentFocus').readlines()
     # 打印包info, 在PPTS做设置时会用到apk的包信息
@@ -315,7 +312,7 @@ def exportapk(cmd = '8'):
     
 # 复制文件、文件夹至手机中的00Tempfile文件夹
 @deco_cls_menus(1)
-def copyfiles2Phone():
+def copytempfile2Phone(cmd = '4'):
     '''
     Copy文件至手机　用法:
     -----------------------------------------
@@ -328,7 +325,7 @@ def copyfiles2Phone():
                 soursefilepath = input('请将要copy的文件或文件夹拖入Console中:')
                 if os.path.exists(soursefilepath) == False:
                     print('路径不存在，请确认?!')
-                    break                                                                  
+                    break
                 else:
                     destinationpath = ' /sdcard/00Tempfile'
                     if isexistfolder('00Tempfile') == True: 
@@ -381,7 +378,7 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
         cmdDELPic = 'adb shell rm -r /sdcard/DCIM'
         cmdDEL00Tempfile = 'adb shell rm -r /sdcard/00Tempfile'
                  
-        # 可以根据输入分别删除mtklog/DCIM/00Tempfile      
+        # 可以根据输入分别删除mtklog/DCIM/00Tempfile        
         def delfolder():
             try:
                 if cmdflag in ('del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog'):
@@ -395,7 +392,6 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                         print('00Tempfile文件夹删除成功!')
             except Exception:
                 print('文件夹不存在,无法删除')
-                
         # 仅copy 00Tempfile folder至桌面
         def copyTempfileOnly():
             if isexistfolder('00Tempfile') == True:
@@ -734,9 +730,7 @@ def main():
                 '2', '2m', 'mtklog', '2mtklog', '2,', \
                 '2mp','mp','2md', 'md', \
                 '2d', '2dcim', 'dcim', \
-                'help2', \
                 '2t', '2tf', 'Tempfile', 'tempfile', 'tf')
-                
     while True:
         try:
             num = input('请输入需要执行项的序号:')
@@ -771,7 +765,7 @@ def main():
             elif selString == 'cmd':
                 executeCMD(cmdswitchConsolePy)
             # 输入'cls'会清屏
-            elif selString == 'cls':               
+            elif selString == 'cls':
                 os.system('cls')
                 print(f'\n\n{menus}')
             elif selString == 'write':
