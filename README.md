@@ -10,15 +10,15 @@
     2:仅删除DCIM文件夹
     可输入:'d d','d,d',  'del d', 'del,d', 'del dcim','d dcim', 'del,dcim', 'd,dcim'
     3:仅删除00Tempfile文件夹
-    可输入:'d tf', 'd t','d,tf', 'd,t', 'del tf', 'del t',  'del,tf', 'del,t',
+    可输入:'d cf', 'd c','d,cf', 'd,c', 'del cf', 'del c',  'del,cf', 'del,c',
     4:复制Mtklog至桌面then删除手机中的Mtklog文件夹
     可输入：'2', '2,', '2m', 'mtklog', '2mtklog',
     5:复制Mtklog/DCIM文件夹then删除手机中的Mtklog/DCIM文件夹
-    可输入:'2mp','mp','2md', 'md'
+    可输入:'2mp','mp','2md', 'md'`
     6:复制DCIM文件夹至桌面then删除DCIM文件夹
     可输入：'2d', '2dcim', 'dcim'
     7:复制00Tempfile至桌面then询问是否删除00Tempfile文件夹
-    可输入：'2t', '2tf', 'tf', 'Tempfile', 'tempfile'
+    可输入：'2c', '2cf', 'cf', 'Copyfile', 'copyfile'
     
     
     3，打开MTKlog 用法：
