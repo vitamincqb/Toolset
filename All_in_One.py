@@ -13,7 +13,7 @@ currunningpyfilepath = os.path.split(os.path.realpath(__file__))[0]
 menus = '''===================Based on Python3.6.5=====================
 0. Exit                                                    
 1. 截图并copy至桌面                                        
-2. Copy文件(MTKlog/DCIM/00Tempfile)至桌面                 
+2. Copy文件(MTKlog/DCIM/Copyfile)至桌面                 
 3. 打开MTKlog                                              
 4. Copy文件至手机                                          
 5. 手机录屏并copy至桌面                                    
@@ -99,7 +99,7 @@ def helpfile(cmd):
     if cmd == 'help3':
         print(turnOnOffMtklog.__doc__)
     if cmd == 'help4':
-        print(copytempfile2Phone.__doc__)
+        print(copyfile2Phone.__doc__)
     if cmd == 'help8':
         print(exportapk.__doc__)
         
@@ -310,14 +310,14 @@ def exportapk(cmd = '8'):
         else:
             return
     
-# 复制文件、文件夹至手机中的00Tempfile文件夹
+# 复制文件、文件夹至手机中的00Copyfile文件夹
 @deco_cls_menus(1)
-def copytempfile2Phone(cmd = '4'):
+def copyfile2Phone(cmd = '4'):
     '''
     Copy文件至手机　用法:
     -----------------------------------------
-    cmd='4' , 复制手机中的00Tempfile文件夹至桌面
-    cmd='4,', 在手机根目录新建00Tempfile
+    cmd='4' , 复制手机中的00Copyfile文件夹至桌面
+    cmd='4,', 在手机根目录新建00Copyfile
     '''
     try:
         if cmd == '4':
@@ -327,22 +327,22 @@ def copytempfile2Phone(cmd = '4'):
                     print('路径不存在，请确认?!')
                     break
                 else:
-                    destinationpath = ' /sdcard/00Tempfile'
-                    if isexistfolder('00Tempfile') == True: 
-                        print('根目录下已存在00Tempfile folder，文件将直接copy至00Tempfile内!')
+                    destinationpath = ' /sdcard/00Copyfile'
+                    if isexistfolder('00Copyfile') == True: 
+                        print('根目录下已存在00Copyfile folder，文件将直接copy至00Copyfile内!')
                         print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
                         if os.system('adb push ' + soursefilepath + ' ' + destinationpath) == 0:
                             print('文件已copy至根目录下的Copyfile folder中!')
                     else:
-                        print('在手机根目录新建folder:00Tempfile成功，copy的文件将保存在此folder中!')
+                        print('在手机根目录新建folder:00Copyfile成功，copy的文件将保存在此folder中!')
                         print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
-                        os.system('adb shell mkdir sdcard/00Tempfile')
+                        os.system('adb shell mkdir sdcard/00Copyfile')
                         if os.system('adb push ' + soursefilepath + destinationpath) == 0:
                             print('文件已copy至根目录下的Copyfile folder中!')
                     break
         if cmd == '4,':
-            os.system('adb shell mkdir sdcard/00Tempfile')
-            print('新建文件夹00Tempfile成功!')
+            os.system('adb shell mkdir sdcard/00Copyfile')
+            print('新建文件夹00Copyfile成功!')
     except KeyboardInterrupt:
         print('\n手动中止操作:KeyboardInterrupt')
     except EOFError:
@@ -352,33 +352,33 @@ def copytempfile2Phone(cmd = '4'):
 @deco_cls_menus(1)
 def copyMtklogOrPicToDesk(cmdflag = '2'):
     '''
-    Copy文件(MTKlog/DCIM/00Tempfile)至桌面 用法：
+    Copy文件(MTKlog/DCIM/00Copyfile)至桌面 用法：
     -------------------------------------------
     1:仅删除mtklog文件夹
     可输入:'d m', 'd,m', 'd mtklog', 'd,mtklog', 'del mtklog', 'del,mtklog', 'del m', 'del,m'
     2:仅删除DCIM文件夹
     可输入:'d d','d,d',  'del d', 'del,d', 'del dcim','d dcim', 'del,dcim', 'd,dcim'
-    3:仅删除00Tempfile文件夹
-    可输入:'d tf', 'd t','d,tf', 'd,t', 'del tf', 'del t',  'del,tf', 'del,t', 
+    3:仅删除00Copyfile文件夹
+    可输入:'d cf', 'd c','d,cf', 'd,c', 'del cf', 'del c',  'del,cf', 'del,c'
     4:复制Mtklog至桌面then删除手机中的Mtklog文件夹
     可输入：'2', '2,', '2m', 'mtklog', '2mtklog', 
     5:复制Mtklog/DCIM文件夹then删除手机中的Mtklog/DCIM文件夹 
     可输入:'2mp','mp','2md', 'md'
     6:复制DCIM文件夹至桌面then删除DCIM文件夹
     可输入：'2d', '2dcim', 'dcim'
-    7:复制00Tempfile至桌面then询问是否删除00Tempfile文件夹
-    可输入：'2t', '2tf', 'tf', 'Tempfile', 'tempfile'
+    7:复制00Copyfile至桌面then询问是否删除00Copyfile文件夹
+    可输入：'2c', '2cf', 'cf', 'Copyfile'
     '''
     try:
         path = 'C:\\Users\\' + getusername() + '\\Desktop'
         cmdMtklogPre = 'adb pull /sdcard/mtklog C:\\Users\\%username%\\Desktop\\'
         cmdPicPre = 'adb pull /sdcard/DCIM C:\\Users\\%username%\\Desktop\\'
-        cmd00TempfilePre = 'adb pull /sdcard/00Tempfile C:\\Users\\%username%\\Desktop\\'
+        cmd00CopyfilePre = 'adb pull /sdcard/00Copyfile C:\\Users\\%username%\\Desktop\\'
         cmdDELMtklog = 'adb shell rm -r /sdcard/mtklog'
         cmdDELPic = 'adb shell rm -r /sdcard/DCIM'
-        cmdDEL00Tempfile = 'adb shell rm -r /sdcard/00Tempfile'
+        cmdDEL00Copyfile = 'adb shell rm -r /sdcard/00Copyfile'
                  
-        # 可以根据输入分别删除mtklog/DCIM/00Tempfile        
+        # 可以根据输入分别删除mtklog/DCIM/00Copyfile        
         def delfolder():
             try:
                 if cmdflag in ('del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog'):
@@ -388,38 +388,42 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                     if os.system(cmdDELPic) == 0:
                         print('DCIM文件夹删除成功!')
                 if cmdflag in ('del tf', 'del t', 'd tf', 'd t', 'del,tf', 'del,t', 'd,tf', 'd,t'):
-                    if os.system(cmdDEL00Tempfile) == 0:
-                        print('00Tempfile文件夹删除成功!')
+                    if os.system(cmdDEL00Copyfile) == 0:
+                        print('00Copyfile文件夹删除成功!')
             except Exception:
                 print('文件夹不存在,无法删除')
-        # 仅copy 00Tempfile folder至桌面
-        def copyTempfileOnly():
-            if isexistfolder('00Tempfile') == True:
-                foldername = creatfolder(path, '00Tempfile')
-                cmd00Tempfile = cmd00TempfilePre + foldername
-                # 如果copy成功，将询问是否删除手机内00Tempfile文件夹
-                if os.system(cmd00Tempfile) == 0:
-                    print('00Tempfile copy完成!')
+                
+        # 仅copy 00Copyfile folder至桌面
+        def copyCopyfileOnly():
+            if isexistfolder('00Copyfile') == True:
+                # foldername = creatfolder(path, '00Copyfile')
+                # cmd00Copyfile = cmd00CopyfilePre + foldername
+                # 如果copy成功，将询问是否删除手机内00Copyfile文件夹
+                if os.system(cmd00CopyfilePre) == 0:
+                    print('00Copyfile copy完成!')
                     while(True):
-                        askme = input('是否删除手机中的00Tempfile folder?(y or n?)')
+                        askme = input('是否删除手机中的00Copyfile folder?(y or n?)')
                         if askme in ('yes', 'YES', 'Yes', 'Y', 'y'):
-                            os.system(cmdDEL00Tempfile)
-                            print('手机中的00Tempfile已del完成!')
+                            os.system(cmdDEL00Copyfile)
+                            print('手机中的00Copyfile已del完成!')
                             return
                         elif askme in ('no', 'NO', 'No', 'N', 'n'):
-                            print('手机中的00Tempfile将保留!')
+                            print('手机中的00Copyfile将保留!')
                             return
                         else:
                             print('输入有误, 请重新输入！')
                             return
                 else:
-                    print('00Tempfile文件夹copy失败!')
+                    print('00Copyfile文件夹copy失败!')
             else:
-                print('00Tempfile文件夹不存在,无法copy!')
+                print('00Copyfile文件夹不存在,无法copy!')
                     
         # 仅copy Mtklog至桌面
         def copyMtklogOnly(confilename = '', flag = 0):
-            '''flag=0, 会在桌面创建文件夹/flag!=0, 不在桌面创建文件夹'''
+            '''
+            flag =0, 会在桌面创建文件夹
+            flag!=0, 不在桌面创建文件夹
+            '''
             if isexistfolder('mtklog') == True:
                 if flag == 0:
                     foldername = creatfolder(path, 'Mtklog')
@@ -480,8 +484,8 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
             copyMtklogDcimOrOthers()
         elif cmdflag in ('2d', '2dcim', 'dcim'):
             copyPicOnly()
-        elif cmdflag in ('2t', '2tf', 'tf', 'Tempfile', 'tempfile'):
-            copyTempfileOnly()
+        elif cmdflag in ('2c', '2cf', 'cf', 'Copyfile', 'Copyfile'):
+            copyCopyfileOnly()
         else:
             delfolder()
             
@@ -726,11 +730,11 @@ def main():
     selItem2Tuple = (
                 'del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog', \
                 'del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d','d,d', 'd,dcim', \
-                'del tf', 'del t', 'd tf', 'd t', 'del,tf', 'del,t', 'd,tf', 'd,t', \
+                'del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c', \
                 '2', '2m', 'mtklog', '2mtklog', '2,', \
                 '2mp','mp','2md', 'md', \
                 '2d', '2dcim', 'dcim', \
-                '2t', '2tf', 'Tempfile', 'tempfile', 'tf')
+                '2c', '2cf', 'Copyfile', 'Copyfile', 'cf')
     while True:
         try:
             num = input('请输入需要执行项的序号:')
@@ -744,7 +748,7 @@ def main():
             elif selString in ('3', '3 0', '3 1', '3,0', '3,1'):
                 turnOnOffMtklog(selString)
             elif selString in ('4', '4,'):
-                copytempfile2Phone(selString)
+                copyfile2Phone(selString)
             elif selString == '5':
                 recordScreen()
             elif selString == '6':
