@@ -40,7 +40,7 @@
     
     
 # Copyfile2phone.py
-当有以下这种需求时刚好可以用用这个tool
+当有以下这种需求时刚好可以用用这个tool（限android平台+python3.6.x)
 
     如要将PC上一个大文件复现到N台手机的根目录时，如果单台的Copy效率很慢；
     如用这个Tool, 可多台手机同时连接PC，只要确保每台手机adb连接成功;
