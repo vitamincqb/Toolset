@@ -38,7 +38,9 @@
     cmd='8' , 将导出当前前台正在使用的apk至桌面
     cmd='8,', 仅输出当前信息的包信息
     
- #Copyfile2phone.py
- 当有以下这种需求进刚好可以用用这个tool
+    
+# Copyfile2phone.py
+当有以下这种需求进刚好可以用用这个tool
+
     如要将PC上一个大文件复现到N台手机的根目录时，如果单台的Copy效率很慢，如用这个Tool, 可多台手机同时连接PC，只要确保每台手机adb连接成功，
     run Copyfile2phone.py，就可以多进程同时给多台手机复制文件，减少花在Copy文件上的总时间
