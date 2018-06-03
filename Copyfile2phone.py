@@ -4,7 +4,7 @@
 import os
 from multiprocessing import Pool
 
-# 获取username, 如chinaren
+# 获取username,  如chinaren
 def getusername():
     namelist = os.popen('echo %username%').readlines()
     username = namelist[0].replace("\n", "")
