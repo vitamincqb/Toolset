@@ -96,7 +96,9 @@ def copyfile_task(deviceid, filename):
         print(f'设备{deviceid} 文件copy成功！\n')
 
 def main():
-    while(True):
+    print('---------重要提示---------')
+    print('请将待Copy文件放置在桌面再进行操作\n\n')
+    while(True)
         copyfilename = getspecifytxtfilefirstline('copyfile2phone.txt')
         if checkAdbConnectability() == True:
             copyfilepath = 'C:\\Users\\' + getusername() + '\\Desktop\\' + copyfilename
