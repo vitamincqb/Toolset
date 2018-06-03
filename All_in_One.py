@@ -113,7 +113,7 @@ def isexistfolder(foldername):
         else:
             return False
     except Exception:
-        print(f'根目录下存在中文名files/folder,可能会操作异常!\n')
+        print(f'根目录下存在中文名file/folder name, 可能会操作异常!\n')
 
 # 记录CODE修改日志, 输入'readme'可进入日志记录界面
 @deco_cls_menus(0)
@@ -178,56 +178,43 @@ def getnowdatatime(flag = 0):
     if flag == 3:
         return time.strftime('%Y%m%d%H%M%S', now)
         
+# 获取设备SN列表
+def getdevlist():
+    devlist = []
+    connectfile = os.popen('adb devices')
+    list = connectfile.readlines()
+    # print(list)
+    for i in range(len(list)):
+        if list[i].find('\tdevice') != -1:
+            temp = list[i].split('\t')
+            devlist.append(temp[0])
+    return devlist
+    
 # 测试Adb连接性
 def checkAdbConnectability(flag = 0):
     '''
-    flag=0 时，当连接正常时返回True(default)
+    flag =0时，当连接正常时返回True(default)
     flag!=0时，直接打印出结果
     '''
-    constring = '''ADB连接失败, 请check以下项:
-    1. 是否有连接上手机？请连接上手机选择选项6重新check连接性!
-    2. 是否有开启"开发者选项"?\n'''
-    connectfile = os.popen('adb devices')
-    list = connectfile.readlines()
-    liststr = ','.join(list).replace('\n', '').strip()
-    if len(list) == 2:
-        print(constring)
+    connectstring = '''ADB连接失败, 请check以下项:
+    1. 是否有连接上手机？请连接上手机选并重新check连接性!
+    2. 是否有开启"开发者选项\\USB调试模式"?\n'''
+    connectinfolist = getdevlist()
+    
+    if len(connectinfolist) == 0:
+        print(connectstring)
         return False
-    # 确保只连接一个设备
-    elif liststr.count('device ') > 1:
-        print('当前连接了多个设备，请确保只连接一个设备才能正常操作!')
-        os.system('adb devices')
-        return False
-    elif len(list) == 3:
+    if len(connectinfolist) == 1:
         if flag != 0:
-            print('adb连接正常')
-            print(list[1])
+            print('连接正常')
+            print(f'设备SN: {connectinfolist[0]}')
         else:
             return True
-    elif len(list) > 3:
-        if liststr.find('daemon') != -1:
-            print(constring)
-            return False
-        else:
-            print('当前ADB连接异常:')
-            for i in range(1, len(list)-1): # 打印出当前的连接信息.
-                if list[i] == '\n':
-                    continue
-                print(list[i], end = ' ')
-            sleep(1)
-            # 修复异常
-            print('正在修复... ...')
-            os.system('TASKKILL /F /IM adb.exe')
-            os.system('adb devices')
-            # check修复结果
-            list = os.popen('adb devices').readlines()
-            if len(list) == 2:
-                print('修复失败, 请自行check\n')
-                return False
-            elif len(list) == 3:
-                print('修复成功, adb连接正常')
-                print(list[1])
-                return True
+    if len(connectinfolist) >= 2:
+        print('连接正常，但当前有连接多台设备，请确保只连接一台才能正常操作. ')
+        for i in range(len(connectinfolist)):
+            print(f'设备{i + 1} SN: {connectinfolist[i]}')
+        return False
             
 # 安装应用
 @deco_cls_menus(1)
@@ -387,7 +374,7 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                 if cmdflag in ('del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d','d,d', 'd,dcim'):
                     if os.system(cmdDELPic) == 0:
                         print('DCIM文件夹删除成功!')
-                if cmdflag in ('del tf', 'del t', 'd tf', 'd t', 'del,tf', 'del,t', 'd,tf', 'd,t'):
+                if cmdflag in ('del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c'):
                     if os.system(cmdDEL00Copyfile) == 0:
                         print('00Copyfile文件夹删除成功!')
             except Exception:
@@ -572,7 +559,7 @@ def generateTXTFile(cmd = 'b'):
     print(f'保存路径: {filepath + filename}')
     print(f'开始时间:{starttime}')
     print(f'结束时间:{getnowdatatime()}')
-    print(f'总共耗时: {(time.clock() - startclock):10.3}秒')
+    print(f'总共耗时:{(time.clock() - startclock):<.3}sec.')
 
 # 安卓手机录屏,文件保存后将copy至桌面
 @deco_cls_menus(1)
@@ -771,7 +758,7 @@ def main():
             # 输入'cls'会清屏
             elif selString == 'cls':
                 os.system('cls')
-                print(f'\n\n{menus}')
+                print(f'{menus}')
             elif selString == 'write':
                 writeReadmefile()
             elif selString == 'read':
