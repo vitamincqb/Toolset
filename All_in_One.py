@@ -72,7 +72,7 @@ def deco_cls_menus(*dargs, **dkw):
                 if checkAdbConnectability() == True:
                     print(f'正在执行所选操作, 请稍候... ...\n')
                     output = func(*args, **kw)
-                    print(f'\n\n{menus}')
+                    print(f'{menus}')
                     return output
                 else:
                     print(f'\n\n{menus}')
@@ -81,7 +81,7 @@ def deco_cls_menus(*dargs, **dkw):
                 os.system('cls')
                 print(f'正在执行所选操作, 请稍候... ...\n')
                 output = func(*args, **kw)
-                print(f'\n\n{menus}')
+                print(f'{menus}')
                 return output
             if dargs[0] == 2:
                 if checkAdbConnectability() == True:
@@ -490,7 +490,7 @@ def screenshot():
                 print('截图成功并保存至桌面!')
 
 # 执行cmd命令
-@deco_cls_menus(0)
+@deco_cls_menus(2)
 def executeCMD(cmd):
     stringList = cmd.splitlines() 
     for i in range(len(stringList)):
@@ -745,7 +745,9 @@ def main():
             elif selString in ('8', '8,'):
                 exportapk(selString)
             elif selString == '9':
+                os.system('cls')
                 executeCMD(cmdLogcat)
+                print(f'{menus}')
             elif selString == 'a':
                 getIpconfigKeyData(cmdIpconfig)
             elif selString in ('b', 'b,', 'b,sd'):
@@ -754,7 +756,9 @@ def main():
                 stopwatchApp()
             # 输入'cmd'会进入console环境
             elif selString == 'cmd':
+                os.system('cls')
                 executeCMD(cmdswitchConsolePy)
+                print(f'{menus}')
             # 输入'cls'会清屏
             elif selString == 'cls':
                 os.system('cls')
@@ -772,7 +776,7 @@ def main():
                 if inputErrorNum >= 7: 
                     inputErrorNum = 0
                     os.system('cls')
-                    print(f'\n\n{menus}')
+                    print(f'{menus}')
                 continue
         except (KeyboardInterrupt, EOFError):
             print('@_@　捕捉到了异常. 请重新输入或重新启动tool!')
