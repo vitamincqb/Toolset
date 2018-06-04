@@ -84,7 +84,7 @@ def checkAdbConnectability(flag = 0):
         print('连接正常，但当前有连接多台设备，请确保只连接一台才能正常操作. ')
         for i in range(len(connectinfolist)):
             print(f'设备{i + 1} SN: {connectinfolist[i]}')
-        return False
+        return True
         
 # Copy文件操作
 def copyfile_task(deviceid, filename):
@@ -121,7 +121,8 @@ def main():
                 TXTfilepath = curfilepath + '\\' + 'copyfile2phone.txt'
                 os.remove(TXTfilepath)
                 print('TXT档被删除成功')
-            
+        else:
+            break    
 # 主程序
 if __name__ == '__main__':
     main()
