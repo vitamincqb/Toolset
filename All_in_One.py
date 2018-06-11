@@ -84,10 +84,10 @@ def deco_cls_menus(*dargs, **dkw):
                 print(f'{menus}')
                 return output
             if dargs[0] == 2:
-                if checkAdbConnectability() == True:
-                    print(f'正在执行所选操作, 请稍候... ...\n')
-                    output = func(*args, **kw)
-                    return output
+                #if checkAdbConnectability() == True:
+                print(f'正在执行所选操作, 请稍候... ...\n')
+                output = func(*args, **kw)
+                return output
         return wrapper
     return _deco_cls_menus
     
