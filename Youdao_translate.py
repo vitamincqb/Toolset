@@ -6,6 +6,9 @@ from urllib import parse
 import json
 
 def youdaoTranslate(value):
+    if value == '':
+        print('输入内容为空@_@')
+        return
     # Request URL
     responseURL = 'http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule'
     # 待提交准备Post给url的Data:定义为dict
