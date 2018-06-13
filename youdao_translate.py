@@ -33,15 +33,16 @@ def youdaoTranslate(value):
     # 打印翻译结果
     # print(f"待翻译的词句：{form_Data['i']}")
     # print(f'翻译的结果是：{translate_result_main}\n\n')
-    print(f"{form_Data['i']} | ", end = '')
-    print(f'{translate_result_main}\n\n')
+    print(f'{count}. {translate_result_main}\n\n')
     
 if __name__ == '__main__':
     try:
+        count = 1
         while True:
             print('-'*26)
             word = input('请输入待翻译的单词或句子:\n').strip()
-            youdaoTranslate(word)
+            youdaoTranslate(word, count)
+            count += 1
     except KeyboardInterrupt:
         print('手动退出!欢迎再来')
     
