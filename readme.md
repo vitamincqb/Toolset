@@ -60,3 +60,18 @@
  爬虫的一个简单应用，利用有道翻译来进行中英文的互译。
     
     可进行中英文的互译. 
+
+# Happy_moment
+ 利用爬虫实时在线爬的一个糗百小开心，有事没事，开心一下。
+ 
+    主要待实现以下功能（based on python3.6.5)：
+    1. 每按回车，就显示一条糗百，开心一下.
+    2. 输入open回车，则用默认浏览器打开当前这条糗百
+    3. 过滤掉image/video，只显示纯text的糗事
+    4. 显示的形式为当前序号/内容/用户投票信息/当前糗百的Link
+    
+    如要run此pycode, 需要安装以下3rd lib
+    1. requests (pip install requests)
+    2. lxml (pip install lxml)
+    
+    如果不想安装python或3rd lib就想玩玩这个开心时刻小程序，可直接在列表中的Dist中下载Happy_moment.exe。
