@@ -75,3 +75,4 @@
     2. lxml (pip install lxml)
     
     如果不想安装python或3rd lib就想玩玩这个开心时刻小程序，可直接在列表中的Dist中下载Happy_moment.exe。
+    当前code并未做异常处理，如在网络不通或不畅应该会出现异常报错退出，见谅，有兴趣的同学请自行完善。
