@@ -6,8 +6,9 @@
 1. 每按回车，就显示一条糗百，开心一下.
 2. 输入open再回车，则用默认浏览器打开当前这条糗百
 3. 输入q再回车，退出小程序
-4. 过滤掉image/video，只显示纯text的糗事
-5. 显示的形式为：当前序号/内容/用户投票信息/当前糗百的Link
+4. 如输入的是数字，则代表只有>=输入数字点赞数的内容才能显示
+5. 过滤掉image/video，只显示纯text的糗事
+6. 显示的形式为：当前序号/内容/用户投票信息/当前糗百的Link
  
 主要使用的第三方库为requests+lxml+xpath
 当前code并未做异常处理，如在网络不通或不畅应该会出现异常报错退出，有兴趣的同学请自行完善。
@@ -26,6 +27,8 @@ class SpideQSBK:
         self.pagenum = 2
         # 用于记录当前处于datalist中的位置
         self.curdatalistId = 0
+        # 最低点赞数(显示的内容由最低点赞数约束，default=0)
+        self.mininumOfZan = 0
         # 糗事内容保存在datalist中
         self.datalist = self.initQSData()
         
@@ -66,6 +69,11 @@ class SpideQSBK:
             href = html.xpath(filterpre + '/a[@class="contentHerf"]/@href')[0]
             # 投票情况数(点赞数)
             voteinfo = html.xpath(filterpre + '//span[@class="stats-vote"]/i[@class="number"]/text()')
+            
+            # 过滤掉点赞数不符合要求的记录
+            if int(voteinfo[0]) < self.mininumOfZan:
+                continue
+                
             # 投票情况数(评论数)
             discussNum = html.xpath(filterpre + '//span[@class="stats-comments"]//i[@class="number"]/text()')
             # 将两个list合并
@@ -125,6 +133,10 @@ class SpideQSBK:
             self.datalist.clear()
             self.datalist = self.getNextpageData(self.pagenum)
             self.pagenum  = self.pagenum + 1
+            while len(self.datalist) == 0:
+                    self.datalist = self.getNextpageData(self.pagenum)
+                    self.pagenum  = self.pagenum + 1
+
             self.curdatalistId = 0
             return self.datalist[self.curdatalistId]
     
@@ -135,6 +147,7 @@ class SpideQSBK:
         recordId = 2
         # 直接输出第一条糗百
         happycontent = self.getOneHappy()
+        precontent = happycontent
         print(f'\n\n第1条:\n')
         for item in range(len(happycontent)):
             if item == len(happycontent)-2:
@@ -149,6 +162,9 @@ class SpideQSBK:
             elif enter == 'open':
                 webbrowser.open(openurl)
             else:
+                if enter.isdigit() == True:
+                    self.mininumOfZan = int(enter)
+                    self.datalist = self.initQSData()
                 os.system('cls')
                 print('是时候嗨皮一下了(数据from糗事百科)!!!')
                 print('回车键可接着嗨皮, q退出, open用默认浏览器查看当前糗百@_@')
@@ -157,7 +173,10 @@ class SpideQSBK:
                 # 有时happycontent会无故为空，如为空，则自动获取下一条，直到不为空为止
                 while(len(happycontent) == 0):
                     happycontent = self.getOneHappy()
+                # while(cmp(happycontent, precontent) == 0):
+                    # happycontent = self.getOneHappy()
                     
+                precontent = happycontent
                 print('\n')
                 print(f'第{recordId}条:\n')
                 for item in range(len(happycontent)):
