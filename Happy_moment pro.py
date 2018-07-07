@@ -24,6 +24,8 @@ class SpideQSBK:
         self.headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'}
         # 糗事百科页码
         self.pagenum = 2
+        # 用于记录当前处于datalist中的位置
+        self.curdatalistId = 0
         # 糗事内容保存在datalist中
         self.datalist = self.initQSData()
         
@@ -108,31 +110,31 @@ class SpideQSBK:
         return nextdatalist 
     
     # 获取一个糗百数据
-    def getOneHappy(self, dataId):
+    def getOneHappy(self):
         # 先大第一页开始读记录，如读完了就获取下一页的数据记录. 
         datalistlen = len(self.datalist)-1
         
         # 如果序号要找到，就返回数据，如找不到，则再加载一个页面的数据
-        if dataId <= datalistlen:
-            data = self.datalist[dataId]
+        if self.curdatalistId <= datalistlen:
+            data = self.datalist[self.curdatalistId]
             # 获取数据后将当前item设置为空，以后占太多的内存空间
-            self.datalist[dataId] = ''
+            self.curdatalistId = self.curdatalistId + 1
             return data
         else:
             # 将新页面的数据直接加在之前的数据后面
-            self.datalist.extend(self.getNextpageData(self.pagenum))
+            self.datalist.clear()
+            self.datalist = self.getNextpageData(self.pagenum)
             self.pagenum  = self.pagenum + 1
-            self.datalist[dataId] = ''
-            return self.datalist[dataId]
+            self.curdatalistId = 0
+            return self.datalist[self.curdatalistId]
     
     # 开始嗨皮一下了        
     def startHappy(self):
         print('是时候嗨皮一下了(数据from糗事百科)!!!')
         print('回车键可接着嗨皮, q退出, open用默认浏览器查看当前糗百@_@')
-        qbId = 2
-        happyId = 2
+        recordId = 2
         # 直接输出第一条糗百
-        happycontent = self.getOneHappy(1)
+        happycontent = self.getOneHappy()
         print(f'\n\n第1条:\n')
         for item in range(len(happycontent)):
             if item == len(happycontent)-2:
@@ -147,25 +149,22 @@ class SpideQSBK:
             elif enter == 'open':
                 webbrowser.open(openurl)
             else:
-                if happyId > 1:
-                    os.system('cls')
+                os.system('cls')
                 print('是时候嗨皮一下了(数据from糗事百科)!!!')
                 print('回车键可接着嗨皮, q退出, open用默认浏览器查看当前糗百@_@')
                 
-                happycontent = self.getOneHappy(happyId)
+                happycontent = self.getOneHappy()
                 # 有时happycontent会无故为空，如为空，则自动获取下一条，直到不为空为止
                 while(len(happycontent) == 0):
-                    happyId = happyId + 1
-                    happycontent = self.getOneHappy(happyId)
+                    happycontent = self.getOneHappy()
                     
                 print('\n')
-                print(f'第{qbId}条:\n')
+                print(f'第{recordId}条:\n')
                 for item in range(len(happycontent)):
                     if item == len(happycontent)-2:
                         print('\n')
                     print(happycontent[item].replace('\n', ''))
-                happyId = happyId + 1
-                qbId = qbId + 1
+                recordId = recordId + 1
     
 if __name__ == '__main__':
     kaixin = SpideQSBK()
