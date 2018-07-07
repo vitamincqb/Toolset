@@ -61,7 +61,7 @@
     
     可进行中英文的互译. 
 
-# Happy_moment
+# Happy_moment/Happy_moment pro
  利用爬虫实时在线爬的一个糗百小开心，有事没事，开心一下。
  
     此程序主要实现以下功能（based on python3.6.5)：
