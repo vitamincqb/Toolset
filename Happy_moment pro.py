@@ -15,6 +15,7 @@
 '''
 
 from lxml import etree
+from time import sleep
 import requests
 import os
 import webbrowser
@@ -131,11 +132,21 @@ class SpideQSBK:
         else:
             # 将新页面的数据直接加在之前的数据后面
             self.datalist.clear()
+            sleep(0.8)
+            print('正在查找数据... ...')
             self.datalist = self.getNextpageData(self.pagenum)
             self.pagenum  = self.pagenum + 1
+            
+            timer = 1
             while len(self.datalist) == 0:
-                    self.datalist = self.getNextpageData(self.pagenum)
-                    self.pagenum  = self.pagenum + 1
+                # 为防止要求的点赞数太高一直查找不到而不断的循环
+                if timer >= 10:
+                    self.mininumOfZan = 0
+                    return ['服务器无响应! 点赞数限制恢复为0, 这是Server端开的一个玩笑，是不是很好笑，我自己都忍不住笑出了声*_*!']
+                sleep(0.8)
+                self.datalist = self.getNextpageData(self.pagenum)
+                self.pagenum  = self.pagenum + 1
+                print('正在查找数据... ...')
 
             self.curdatalistId = 0
             return self.datalist[self.curdatalistId]
