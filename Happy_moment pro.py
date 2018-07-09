@@ -132,29 +132,29 @@ class SpideQSBK:
         else:
             # 将新页面的数据直接加在之前的数据后面
             self.datalist.clear()
-            sleep(0.8)
-            print('正在查找数据... ...')
             self.datalist = self.getNextpageData(self.pagenum)
             self.pagenum  = self.pagenum + 1
             
-            timer = 1
+            timer = 0
             while len(self.datalist) == 0:
                 # 为防止要求的点赞数太高一直查找不到而不断的循环
                 if timer >= 10:
                     self.mininumOfZan = 0
-                    return ['服务器无响应! 点赞数限制恢复为0, 这是Server端开的一个玩笑，是不是很好笑，我自己都忍不住笑出了声*_*!']
-                sleep(0.8)
+                    return ['服务器无响应! 点赞数限制恢复为0, 这是Server端开的一个玩笑,是不是很好笑, 我都忍不住笑出了声, 哇哈哈哈*_*!']
+                
+                timer = timer + 1
+                sleep(0.8)    
+                print(f'正在查找数据,第{timer}次... ...')
                 self.datalist = self.getNextpageData(self.pagenum)
                 self.pagenum  = self.pagenum + 1
-                print('正在查找数据... ...')
-
+                
             self.curdatalistId = 0
             return self.datalist[self.curdatalistId]
     
     # 开始嗨皮一下了        
     def startHappy(self):
         print('是时候嗨皮一下了(数据from糗事百科)!!!')
-        print('回车键可接着嗨皮, q退出, open用默认浏览器查看当前糗百@_@')
+        print('Enter:接着嗨皮, q:退出, open:用浏览器查看, 输入数字:设置最低点赞数!')
         recordId = 2
         # 直接输出第一条糗百
         happycontent = self.getOneHappy()
@@ -178,7 +178,7 @@ class SpideQSBK:
                     self.datalist = self.initQSData()
                 os.system('cls')
                 print('是时候嗨皮一下了(数据from糗事百科)!!!')
-                print('回车键可接着嗨皮, q退出, open用默认浏览器查看当前糗百@_@')
+                print('Enter:接着嗨皮, q:退出, open:用浏览器查看, 输入数字:设置最低点赞数!')
                 
                 happycontent = self.getOneHappy()
                 # 有时happycontent会无故为空，如为空，则自动获取下一条，直到不为空为止
