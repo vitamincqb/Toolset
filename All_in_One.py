@@ -1,5 +1,5 @@
 #!/user/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 import os
 from time import sleep
@@ -25,11 +25,11 @@ a. 获取PC IP address
 b. 生成指定大小的TXT档                                     
 c. 计时器(Stopwatch)
 d. 翻译(Translate)                                       
-                                                           
+
 Others:cmd/exit/cls/read/write/help2/help3/help4/help8                             
 ------------------------------------------------------------
 '''
-        
+
 cmdLogcat = '''echo 请按 CTRL+C 来停止log的录制! logcat.txt档将保存在桌面.
 adb shell logcat >C:\\Users\\%username%\\Desktop\\logcat.txt
 '''
@@ -55,7 +55,8 @@ cmdswitchConsolePy = '''echo 欢迎进入Console环境(cmd), 输入exit将再次
 echo=
 C:\Windows\System32\cmd.exe
 '''
-    
+
+
 # 装饰器,用于在执行函数前时清屏和执行完函数时打印出menus
 def deco_cls_menus(*dargs, **dkw):
     '''
@@ -89,9 +90,12 @@ def deco_cls_menus(*dargs, **dkw):
                     print(f'正在执行所选操作, 请稍候... ...\n')
                     output = func(*args, **kw)
                     return output
+
         return wrapper
+
     return _deco_cls_menus
-    
+
+
 # 获取各个功能项的使用说明档
 @deco_cls_menus(0)
 def helpfile(cmd):
@@ -104,6 +108,7 @@ def helpfile(cmd):
     if cmd == 'help8':
         print(exportapk.__doc__)
 
+
 # 翻译
 @deco_cls_menus(0)
 def translate():
@@ -111,7 +116,7 @@ def translate():
     from urllib import parse
     import json
     import os
-    
+
     def youdaotranslate(value, count):
         if value == '':
             print('输入内容为空@_@')
@@ -133,7 +138,7 @@ def translate():
             form_Data['typoResult'] = 'false'
             # 使用urlencode方法转换标准格式　
             data = parse.urlencode(form_Data).encode('utf-8')
-            response = request.urlopen(responseURL,data)
+            response = request.urlopen(responseURL, data)
             html = response.read().decode('utf-8')
             # 使用JSON
             translate_result = json.loads(html)
@@ -144,12 +149,12 @@ def translate():
             # 打印翻译结果
             print(f'{count}. {translate_result_main}\n\n')
             return True
-            
+
     try:
         print('输入q退出, 输入cls清屏.')
         count = 1
         while True:
-            print('-'*26)
+            print('-' * 26)
             word = input('请输入待翻译的单词或句子:\n').strip()
             if word == 'q':
                 break
@@ -159,7 +164,8 @@ def translate():
                 count += 1
     except KeyboardInterrupt:
         print('手动退出!欢迎再来')
-        
+
+
 # 判断手机/sdcard/下是否存在指定的文件夹名
 def isexistfolder(foldername):
     try:
@@ -171,6 +177,7 @@ def isexistfolder(foldername):
             return False
     except Exception:
         print(f'根目录下存在中文名file/folder name, 可能会操作异常!\n')
+
 
 # 记录CODE修改日志, 输入'readme'可进入日志记录界面
 @deco_cls_menus(0)
@@ -190,11 +197,10 @@ def writeReadmefile():
             f.write('\n\n' + getnowdatatime(0) + '\n')
             for line in modifyRec:
                 f.write(line + '\n')
-            # 关闭文件
-            f.close()
             print('记录已保存！')
     else:
-        print(currunningpyfilepath,'\n以上目录文档不存在, 无法写入!请向Owner索要文档!')
+        print(currunningpyfilepath, '\n以上目录文档不存在, 无法写入!请向Owner索要文档!')
+
 
 # 读取修改记录
 @deco_cls_menus(0)
@@ -210,20 +216,22 @@ def readModifyrecord():
                 print(lineId, '      ', line)
                 lineId += 1
     else:
-        print(currunningpyfilepath,'\n以上目录文档不存在, 无法读取!请向Owner索要文档!')
-    
+        print(currunningpyfilepath, '\n以上目录文档不存在, 无法读取!请向Owner索要文档!')
+
+
 # 读取菜单Item
 def readMenuItem(num):
     menuitem = menus.splitlines()[num + 1]
     print(f'正在执行 {menuitem}\n')
 
-# 获取时间和日期 
-def getnowdatatime(flag = 0):
+
+# 获取时间和日期
+def getnowdatatime(flag=0):
     '''
     flag = 0为时间和日期         eg:2018-04-11 10:04:55
     flag = 1仅获取日期           eg:2018-04-11
     flag = 2仅获取时间           eg:10:04:55
-    flag = 3纯数字的日期和时间   eg:20180411100455 
+    flag = 3纯数字的日期和时间   eg:20180411100455
     '''
     now = time.localtime(time.time())
     if flag == 0:
@@ -234,7 +242,8 @@ def getnowdatatime(flag = 0):
         return time.strftime('%H:%M:%S', now)
     if flag == 3:
         return time.strftime('%Y%m%d%H%M%S', now)
-        
+
+
 # 获取设备SN列表
 def getdevlist():
     devlist = []
@@ -246,9 +255,10 @@ def getdevlist():
             temp = list[i].split('\t')
             devlist.append(temp[0])
     return devlist
-    
+
+
 # 测试Adb连接性
-def checkAdbConnectability(flag = 0):
+def checkAdbConnectability(flag=0):
     '''
     flag =0时，当连接正常时返回True(default)
     flag!=0时，直接打印出结果
@@ -257,7 +267,7 @@ def checkAdbConnectability(flag = 0):
     1. 是否有连接上手机？请连接上手机选并重新check连接性!
     2. 是否有开启"开发者选项\\USB调试模式"?\n'''
     connectinfolist = getdevlist()
-    
+
     if len(connectinfolist) == 0:
         print(connectstring)
         return False
@@ -272,12 +282,13 @@ def checkAdbConnectability(flag = 0):
         for i in range(len(connectinfolist)):
             print(f'设备{i + 1} SN: {connectinfolist[i]}')
         return False
-            
+
+
 # 安装应用
 @deco_cls_menus(1)
 def installapk():
     try:
-        while(True):
+        while (True):
             path = input('请将待安装apk或apk folder拖入Console中:')
             if os.path.exists(path) == False:
                 print('路径不存在或路径中不要出现中文，请确认?!')
@@ -312,9 +323,10 @@ def installapk():
     except EOFError:
         print('\n未知异常: EOFError')
 
+
 # 导出手机当前前台正在使用的apk
 @deco_cls_menus(1)
-def exportapk(cmd = '8'):
+def exportapk(cmd='8'):
     '''
     导出APK to desk(前台正在使用的apk)　用法:
     -----------------------------------------
@@ -324,15 +336,15 @@ def exportapk(cmd = '8'):
     # 获取包info
     packagefileline = os.popen('adb shell dumpsys window | findstr mCurrentFocus').readlines()
     # 打印包info, 在PPTS做设置时会用到apk的包信息
-    packageinfo = packagefileline[len(packagefileline) -1].strip()
+    packageinfo = packagefileline[len(packagefileline) - 1].strip()
     beg = packageinfo.find('u0')
-    print('PackageInfo: ', packageinfo[beg+3:len(packageinfo)-1])
+    print('PackageInfo: ', packageinfo[beg + 3:len(packageinfo) - 1])
     # 打印出包info
     # 如手机为锁屏状态，无法获取则退出, 并提示当前为锁屏状态
     # mtk/xiaomi/samsung=Keyguard
     # huawei=StatusBar
     if packageinfo.find('Keyguard') != -1 or \
-    packageinfo.find('StatusBar') != -1:
+            packageinfo.find('StatusBar') != -1:
         print('手机处于锁屏状态, 无法获取应用info.请退出锁屏状态再导出apk!!!')
         return
     else:
@@ -353,10 +365,11 @@ def exportapk(cmd = '8'):
             print('Apk已导出至桌面.')
         else:
             return
-    
+
+
 # 复制文件、文件夹至手机中的00Copyfile文件夹
 @deco_cls_menus(1)
-def copyfile2Phone(cmd = '4'):
+def copyfile2Phone(cmd='4'):
     '''
     Copy文件至手机　用法:
     -----------------------------------------
@@ -365,14 +378,14 @@ def copyfile2Phone(cmd = '4'):
     '''
     try:
         if cmd == '4':
-            while(True):
+            while (True):
                 soursefilepath = input('请将要copy的文件或文件夹拖入Console中:')
                 if os.path.exists(soursefilepath) == False:
                     print('路径不存在，请确认?!')
                     break
                 else:
                     destinationpath = ' /sdcard/00Copyfile'
-                    if isexistfolder('00Copyfile') == True: 
+                    if isexistfolder('00Copyfile') == True:
                         print('根目录下已存在00Copyfile folder，文件将直接copy至00Copyfile内!')
                         print('Copy操作准备中(按CTRC+C可中止copy!)，请稍候.... ...')
                         if os.system('adb push ' + soursefilepath + ' ' + destinationpath) == 0:
@@ -392,9 +405,10 @@ def copyfile2Phone(cmd = '4'):
     except EOFError:
         print('\n未知异常:EOFError')
 
+
 # 从手机里copy mtklog至桌面
 @deco_cls_menus(1)
-def copyMtklogOrPicToDesk(cmdflag = '2'):
+def copyMtklogOrPicToDesk(cmdflag='2'):
     '''
     Copy文件(MTKlog/DCIM/00Copyfile)至桌面 用法：
     -------------------------------------------
@@ -405,8 +419,8 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
     3:仅删除00Copyfile文件夹
     可输入:'d cf', 'd c','d,cf', 'd,c', 'del cf', 'del c',  'del,cf', 'del,c'
     4:复制Mtklog至桌面then删除手机中的Mtklog文件夹
-    可输入：'2', '2,', '2m', 'mtklog', '2mtklog', 
-    5:复制Mtklog/DCIM文件夹then删除手机中的Mtklog/DCIM文件夹 
+    可输入：'2', '2,', '2m', 'mtklog', '2mtklog',
+    5:复制Mtklog/DCIM文件夹then删除手机中的Mtklog/DCIM文件夹
     可输入:'2mp','mp','2md', 'md'
     6:复制DCIM文件夹至桌面then删除DCIM文件夹
     可输入：'2d', '2dcim', 'dcim'
@@ -421,14 +435,14 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
         cmdDELMtklog = 'adb shell rm -r /sdcard/mtklog'
         cmdDELPic = 'adb shell rm -r /sdcard/DCIM'
         cmdDEL00Copyfile = 'adb shell rm -r /sdcard/00Copyfile'
-                 
-        # 可以根据输入分别删除mtklog/DCIM/00Copyfile        
+
+        # 可以根据输入分别删除mtklog/DCIM/00Copyfile
         def delfolder():
             try:
                 if cmdflag in ('del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog'):
                     if os.system(cmdDELMtklog) == 0:
                         print('mtk文件夹删除成功!')
-                if cmdflag in ('del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d','d,d', 'd,dcim'):
+                if cmdflag in ('del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d', 'd,d', 'd,dcim'):
                     if os.system(cmdDELPic) == 0:
                         print('DCIM文件夹删除成功!')
                 if cmdflag in ('del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c'):
@@ -436,7 +450,7 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                         print('00Copyfile文件夹删除成功!')
             except Exception:
                 print('文件夹不存在,无法删除')
-                
+
         # 仅copy 00Copyfile folder至桌面
         def copyCopyfileOnly():
             if isexistfolder('00Copyfile') == True:
@@ -445,7 +459,7 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                 # 如果copy成功，将询问是否删除手机内00Copyfile文件夹
                 if os.system(cmd00CopyfilePre) == 0:
                     print('00Copyfile copy完成!')
-                    while(True):
+                    while (True):
                         askme = input('是否删除手机中的00Copyfile folder?(y or n?)')
                         if askme in ('yes', 'YES', 'Yes', 'Y', 'y'):
                             os.system(cmdDEL00Copyfile)
@@ -461,9 +475,9 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                     print('00Copyfile文件夹copy失败!')
             else:
                 print('00Copyfile文件夹不存在,无法copy!')
-                    
+
         # 仅copy Mtklog至桌面
-        def copyMtklogOnly(confilename = '', flag = 0):
+        def copyMtklogOnly(confilename='', flag=0):
             '''
             flag =0, 会在桌面创建文件夹
             flag!=0, 不在桌面创建文件夹
@@ -486,9 +500,9 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                     print('Mtklog文件夹copy失败!')
             else:
                 print('mtklog文件夹不存在,无法copy!')
-            
+
         # 仅copy DCIM文件夹至桌面
-        def copyPicOnly(confilename = '', flag = 0):
+        def copyPicOnly(confilename='', flag=0):
             '''flag=0, 会在桌面创建文件夹/flag!=0, 不在桌面创建文件夹'''
             if isexistfolder('DCIM') == True:
                 if flag == 0:
@@ -505,7 +519,7 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                     print('DCIM文件夹copy失败!')
             else:
                 print('DCIM文件夹不存在,无法copy!')
-                
+
         # copy Mtklog及DCIC文件至桌面
         def copyMtklogDcimOrOthers():
             if isexistfolder('mtklog') == True and isexistfolder('DCIM') == True:
@@ -520,11 +534,11 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
                 copyPicOnly()
             else:
                 print('Mtklog/DCIM文件夹均不存在,无法copy!')
-        
-        # 对不同要求的处理. 
+
+        # 对不同要求的处理.
         if cmdflag in ('2', '2m', 'mtklog', '2mtklog', '2,'):
             copyMtklogOnly()
-        elif cmdflag in ('2md','md', 'mp', '2mp'):
+        elif cmdflag in ('2md', 'md', 'mp', '2mp'):
             copyMtklogDcimOrOthers()
         elif cmdflag in ('2d', '2dcim', 'dcim'):
             copyPicOnly()
@@ -532,33 +546,36 @@ def copyMtklogOrPicToDesk(cmdflag = '2'):
             copyCopyfileOnly()
         else:
             delfolder()
-            
+
     # 用于处理:当根目录下有中文文件夹且无mtklog folder时,可能会由于编码问题而出导致程序报错退出.
     except Exception:
         print('操作异常, 请check目录中是否存在mtklog&DCIM folder!')
 
-# 截图并copy至桌面            
+
+# 截图并copy至桌面
 @deco_cls_menus(1)
 def screenshot():
     filename = getnowdatatime(3) + '.png'
-    if os.system('adb shell /system/bin/screencap -p /sdcard/' + filename ) == 0:
+    if os.system('adb shell /system/bin/screencap -p /sdcard/' + filename) == 0:
         if os.system('adb pull /sdcard/' + filename + ' C:\\Users\\%username%\\Desktop\\' + filename) == 0:
             if os.system('adb shell rm /sdcard/' + filename) == 0:
                 print('截图成功并保存至桌面!')
 
+
 # 执行cmd命令
 @deco_cls_menus(0)
 def executeCMD(cmd):
-    stringList = cmd.splitlines() 
+    stringList = cmd.splitlines()
     for i in range(len(stringList)):
         try:
             os.system(stringList[i])
         except KeyboardInterrupt:
             print('\n异常退出: KeyboardInterrupt')
 
+
 # 开、关、调用mtklog
 @deco_cls_menus(1)
-def turnOnOffMtklog(cmd = '3'):
+def turnOnOffMtklog(cmd='3'):
     '''
     打开MTKlog 用法：
     ----------------
@@ -571,13 +588,14 @@ def turnOnOffMtklog(cmd = '3'):
     elif cmd in ('3 0', '3,0'):
         # 当前默认只开启mobile log，因为这个最常用
         executeCMD(cmdTurnOffMtklog)
-    else: 
+    else:
         # ('3 1', '3, 1')
         executeCMD(cmdTurnOnMtklog)
-        
+
+
 # 生成指定大小的TXT档
 @deco_cls_menus(0)
-def generateTXTFile(cmd = 'b'):
+def generateTXTFile(cmd='b'):
     fileSize = 0
     # 判断输入是否有误
     while True:
@@ -587,30 +605,28 @@ def generateTXTFile(cmd = 'b'):
             continue
         else:
             fileSize = int(size)
-            break            
+            break
     if fileSize >= 200:
-       print('正在生成TXT文件，请稍候... ...')
+        print('正在生成TXT文件，请稍候... ...')
     # 生成指定大小的TXT档
     filename = getnowdatatime(3) + '_' + size + 'MB.txt'
     print(f'文件名：{filename}')
     # 设置文件保存的路径
     filepath = 'C:\\Users\\' + getusername() + '\\Desktop\\'
-    f = open(filepath + filename, 'w')
-    # 获取开始时间
-    starttime = getnowdatatime() 
-    startclock = time.clock()
-    for i in range(fileSize):
-        if i >= 100:
-            if i%100 == 0:
-                print(f'已生成{i//100 * 100}MB数据.')
-        for j in range(1024):
-            try:
-                f.write('01'*512)
-            except KeyboardInterrupt:
-                print('\n异常中断:KeyboardInterrupt')
-                f.close()
-                exit(-1)
-    f.close()
+    with open(filepath + filename, 'w') as f:
+        # 获取开始时间
+        starttime = getnowdatatime()
+        startclock = time.clock()
+        for i in range(fileSize):
+            if i >= 100:
+                if i % 100 == 0:
+                    print(f'已生成{i//100 * 100}MB数据.')
+            for j in range(1024):
+                try:
+                    f.write('01' * 512)
+                except KeyboardInterrupt:
+                    print('\n异常中断:KeyboardInterrupt')
+                    exit(-1)
     print(f'文件已成生并保存在桌面,  文件大小:{fileSize}MB.\n')
     print(f'DetailInfo:')
     print(f'保存路径: {filepath + filename}')
@@ -618,13 +634,14 @@ def generateTXTFile(cmd = 'b'):
     print(f'结束时间:{getnowdatatime()}')
     print(f'总共耗时:{(time.clock() - startclock):<.3}sec.')
 
+
 # 安卓手机录屏,文件保存后将copy至桌面
 @deco_cls_menus(1)
 def recordScreen():
     filename = getnowdatatime(3) + '.mp4'
     print('video正在录制中(请按CTRL + C结束video录制)')
     try:
-        os.system('adb shell screenrecord sdcard/' + filename )
+        os.system('adb shell screenrecord sdcard/' + filename)
     except KeyboardInterrupt:
         print('\n手动中止录制')
         print('正在将video copy至桌面,请稍候... ...')
@@ -641,9 +658,11 @@ def recordScreen():
                 print('video copy至桌面完成!')
             print('正在删除手机中的video记录... ...')
             if os.system('adb shell "rm /sdcard/' + filename) == 0:
-                print('手机中的video已删除.')            
-    
-# 获取电脑的IP地址
+                print('手机中的video已删除.')
+
+            # 获取电脑的IP地址
+
+
 @deco_cls_menus(0)
 def getIpconfigKeyData(cmd):
     resultapklist = os.popen(cmd).readlines()
@@ -653,10 +672,11 @@ def getIpconfigKeyData(cmd):
             startIndex = index
             break
     for line in range(startIndex, startIndex + 4):
-        print(resultapklist[line], end = ' ')
-        
+        print(resultapklist[line], end=' ')
+
     print('\n电脑的', resultapklist[startIndex + 1].lstrip())
-    
+
+
 # 获取username, 如chinaren
 def getusername():
     namelist = os.popen('echo %username%').readlines()
@@ -664,58 +684,61 @@ def getusername():
     # 获取当前的username
     return username
 
+
 # 在指定路径新建一个指定前缀_当前系统时间文件夹,并返回foldername(eg:Mtklog_20180411100455)
 def creatfolder(path, folderprefix):
     os.chdir(path)
     foldername = folderprefix + '_' + getnowdatatime(3)
     os.mkdir(foldername)
     return foldername
-    
+
+
 # 计时器类
 class StopWatch(Frame):
     msec = 50
+
     # 初始化
-    def __init__(self,parent = None,**kw):
-        Frame.__init__(self,parent,kw)
+    def __init__(self, parent=None, **kw):
+        Frame.__init__(self, parent, kw)
         self.__start = 0.0
         self.__elapsedtime = 0.0
         self.__running = False
         self.timestr = StringVar()
         self.makeWidgets()
         # print('__init__')
-        
+
     # 新增时间Label
     def makeWidgets(self):
-        lable = Label(self,textvariable = self.timestr, font = ("宋体, 120"))
+        lable = Label(self, textvariable=self.timestr, font=("宋体, 120"))
         self.setTime(self.__elapsedtime)
-        lable.pack(fill = Y, expand = NO, pady = 2, padx = 2, anchor = CENTER)
+        lable.pack(fill=Y, expand=NO, pady=2, padx=2, anchor=CENTER)
         # print('makeWidgets')
-        
+
     # 用逝去的时间更新标签
     def update(self):
         self.__elapsedtime = time.time() - self.__start
         self.setTime(self.__elapsedtime)
-        self.__timer = self.after(self.msec,self.update)
+        self.__timer = self.after(self.msec, self.update)
         # print('update')
-        
+
     # 将时间格式改为分:秒:千分秒(00:00:000)
-    def setTime(self,elap):
-        minutes = int(elap/60)
-        seconds = int(elap - minutes*60.0)
-        hseconds = int((elap - minutes*60.0-seconds)*1000)
+    def setTime(self, elap):
+        minutes = int(elap / 60)
+        seconds = int(elap - minutes * 60.0)
+        hseconds = int((elap - minutes * 60.0 - seconds) * 1000)
         # self.timestr.set('{:0>2d}:{:0>2d}:{:0>3d}'.format(minutes,seconds,hseconds))
         self.timestr.set(f'{minutes:0>2d}:{seconds:0>2d}:{hseconds:0>3d}')
         # print('setTime')
-        
+
     # 启动计时器，如果已启动则忽略
     def start(self):
         if not self.__running:
-           self.__start = time.time() - self.__elapsedtime
-           self.update() 
-           self.__running = True
-           print('计时器开始计时.')
-           # print('start')
-           
+            self.__start = time.time() - self.__elapsedtime
+            self.update()
+            self.__running = True
+            print('计时器开始计时.')
+            # print('start')
+
     # 停止计时器，若已停止则忽略
     def stop(self):
         if self.__running:
@@ -725,7 +748,7 @@ class StopWatch(Frame):
             self.__running = False
             print('计时器停止计时.')
             # print('stop')
-    
+
     # 重设计时器
     def reset(self):
         self.__start = time.time()
@@ -733,7 +756,8 @@ class StopWatch(Frame):
         self.setTime(self.__elapsedtime)
         print('计时器恢复默认状态.')
         # print('reset')
-        
+
+
 # 计时器
 @deco_cls_menus(0)
 def stopwatchApp():
@@ -741,11 +765,11 @@ def stopwatchApp():
     root = Tk()
     root.title('Stopwatch for UX test')
     app = StopWatch(root)
-    app.pack(side = TOP)
-    Button(root, text = '开始计时', command = app.start).pack(side = LEFT, anchor = S, fill= X, expand = YES)
-    Button(root, text = '停止计时', command = app.stop).pack(side = LEFT, anchor = S, fill= X, expand = YES)
-    Button(root, text = '重置计时', command = app.reset).pack(side = LEFT, anchor = S, fill= X, expand = YES)
-    
+    app.pack(side=TOP)
+    Button(root, text='开始计时', command=app.start).pack(side=LEFT, anchor=S, fill=X, expand=YES)
+    Button(root, text='停止计时', command=app.stop).pack(side=LEFT, anchor=S, fill=X, expand=YES)
+    Button(root, text='重置计时', command=app.reset).pack(side=LEFT, anchor=S, fill=X, expand=YES)
+
     ''' 
     窗口位置和修改窗口大小，要用到是tk对象提供的geometry方法。https://jingyan.baidu.com/article/ad310e801dd5261848f49e6b.html
     该方法的用法是geometry(字符串)，这个字符串格式为：
@@ -757,28 +781,29 @@ def stopwatchApp():
     # 窗口宽高
     ww = 750
     wh = 200
-    x = (sw - ww)/2
-    y = (sh - 2*wh)/2
+    x = (sw - ww) / 2
+    y = (sh - 2 * wh) / 2
     # root.geometry("{}x{}+{:.0f}+{:.0f}".format(ww,wh,x,y))
     root.geometry(f"{ww}x{wh}+{x:.0f}+{y:.0f}")
     # 为使用的方便,启动时就自动计时
     app.start()
     root.mainloop()
 
+
 # 主函数
 def main():
     # check adb的连接性
-    checkAdbConnectability() 
+    checkAdbConnectability()
     print(menus)
     inputErrorNum = 0
     selItem2Tuple = (
-                'del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog', \
-                'del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d','d,d', 'd,dcim', \
-                'del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c', \
-                '2', '2m', 'mtklog', '2mtklog', '2,', \
-                '2mp','mp','2md', 'md', \
-                '2d', '2dcim', 'dcim', \
-                '2c', '2cf', 'Copyfile', 'Copyfile', 'cf')
+        'del mtklog', 'del m', 'd m', 'd mtklog', 'del,mtklog', 'del,m', 'd,m', 'd,mtklog', \
+        'del dcim', 'del d', 'd d', 'd dcim', 'del,dcim', 'del,d', 'd,d', 'd,dcim', \
+        'del cf', 'del c', 'd cf', 'd c', 'del,cf', 'del,c', 'd,cf', 'd,c', \
+        '2', '2m', 'mtklog', '2mtklog', '2,', \
+        '2mp', 'mp', '2md', 'md', \
+        '2d', '2dcim', 'dcim', \
+        '2c', '2cf', 'Copyfile', 'Copyfile', 'cf')
     while True:
         try:
             num = input('请输入需要执行项的序号:')
@@ -828,7 +853,7 @@ def main():
                 # 如果连续输入序号错误7次会清屏一次，避免看不到菜单
                 inputErrorNum = inputErrorNum + 1
                 print('当前输入有误!')
-                if inputErrorNum >= 7: 
+                if inputErrorNum >= 7:
                     inputErrorNum = 0
                     os.system('cls')
                     print(f'\n\n{menus}')
@@ -836,7 +861,8 @@ def main():
         except (KeyboardInterrupt, EOFError):
             print('@_@　捕捉到了异常. 请重新输入或重新启动tool!')
             print(f'\n\n{menus}')
-                
-#--------------------主程序--------------------
+
+
+# --------------------主程序--------------------
 if __name__ == '__main__':
     main()
