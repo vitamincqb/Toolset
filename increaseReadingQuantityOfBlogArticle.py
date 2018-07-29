@@ -95,7 +95,16 @@ def getPageData(pageurl):
             
     return hreflist, titlelist
     
-    
+
+# 在桌面上新增一个Txt档，用于记录运行过程中发生的访问异常点
+path = 'C:\\Users\\' + getusername() + '\\Desktop\\temp.txt'
+print('正在桌面新增temp.txt档用于存储运行过程中发生的访问异常. ')
+if os.path.exists(path) == False:
+    open(path, 'w').close()
+    print('temp.txt档添加成功！\n\n')
+else:
+    print('桌面已存在temp.txt！\n\n')
+
 def viewtask(viewhref, viewtitle):
     print(f'当前正在访问文章:\nTitle:{viewtitle}, \nHref:{viewhref}')
     try:
@@ -154,5 +163,3 @@ def startviewwebpage():
 if __name__ == '__main__':
     initAlldata()
     startviewwebpage()
-    
-    
