@@ -182,4 +182,39 @@ def getnowdatatime(flag = 0):
     if flag == 3:
         return time.strftime('%Y%m%d%H%M%S', now)
         
+# 用于判断当前界面元素的状态        
+def isExistElementValue(query, value, deviceid = ''):
+    '''
+    因为adb shell来执行是没有办法去判断界面元素的执行状态。
+    而有时又必须要判断当前的执行状态，则要用到这个函数.
+    常用命令：
+    adb shell uiautomator dump /sdcard/ui.xml
+    adb pull /sdcard/ui.xml ./Desktop/
+    http://web.chacuo.net/formatxml
+    '''
+    from lxml import etree
+    if deviceid == '':
+        xmlfilename = 'ui.xml'
+        uixmlfile = 'adb shell uiautomator dump /sdcard/' + xmlfilename
+        pulluixmlToDesktop = 'adb pull /sdcard/' + xmlfilename + ' C:\\Users\\' + getusername() + '\\Desktop\\'
+        print(pulluixmlToDesktop)
+    else:
+        xmlfilename = deviceid + '.xml'
+        uixmlfile = 'adb -s ' + deviceid + ' shell uiautomator dump /sdcard/' + xmlfilename
+        pulluixmlToDesktop = 'adb -s ' + deviceid + ' pull /sdcard/' + xmlfilename + ' C:\\Users\\' + getusername() + '\\Desktop\\'
+        print(pulluixmlToDesktop)
+        
+    # 保存当前界面xml并pull至桌面
+    os.system(uixmlfile)
+    os.system(pulluixmlToDesktop)
+    
+    # 打开xml文档
+    tree = etree.parse('C:\\Users\\' + getusername() + '\\Desktop\\' + xmlfilename)
+    result = tree.xpath(query)[0]
+    print(f'result:{result}')
+    if result == value:
+        return True
+    else:
+        return False
+    
         
